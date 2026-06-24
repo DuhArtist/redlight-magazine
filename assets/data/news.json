@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "title": "Saving Heauxs — The Movement",
+    "cat": "breaking",
+    "excerpt": "A network rises to protect and empower New Lanta's workers.",
+    "img": "assets/images/articles/elexus-cover.png",
+    "full": "The power outage affected over 300,000 residents, leading to traffic jams and interrupted broadcasts. Officials cite sabotage from the lower industrial sectors...",
+    "related": ["breaking", "crime"]
+  },
+  {
+    "id": 2,
+    "title": "Elections & Control",
+    "cat": "politics",
+    "excerpt": "Who really governs the city — and why it matters.",
+    "img": "assets/images/articles/taliyah.webp",
+    "full": "The power outage affected over 300,000 residents, leading to traffic jams and interrupted broadcasts. Officials cite sabotage from the lower industrial sectors...",
+    "related": ["politics"]
+  },
+  {
+    "id": 3,
+    "title": "Red Moon Rising",
+    "cat": "entertainment",
+    "excerpt": "Lelu’s dancers prepare for the Moonlight Festival.",
+    "img": "assets/images/articles/crying-bella.webp",
+    "full": "The power outage affected over 300,000 residents, leading to traffic jams and interrupted broadcasts. Officials cite sabotage from the lower industrial sectors...",
+    "related": ["entertainment"]
+  },
+  { 
+    "id":4, 
+    "title":"City Crime Wave: Who's Behind It?", 
+    "cat":"crime", 
+    "excerpt":"An analysis of shifting gangs and new power players in New Lanta.", 
+    "img": "assets/images/articles/redlight.png",
+    "full": "The power outage affected over 300,000 residents, leading to traffic jams and interrupted broadcasts. Officials cite sabotage from the lower industrial sectors...",
+    "related": ["crime"]
+  },
+  { 
+    "id":5, 
+    "title":"Aphrodite Gardens: Healing Spaces",
+    "cat":"health", 
+    "excerpt":"Exploring mental health and sanctuary for the city's entertainers.", 
+    "img": "assets/images/articles/redlight.png",
+    "full": "The power outage affected over 300,000 residents, leading to traffic jams and interrupted broadcasts. Officials cite sabotage from the lower industrial sectors...",
+    "related": ["health"]
+  },
+  { 
+    "id":6, 
+    "title":"Elections & Control: Local Politics", 
+    "cat":"politics", 
+    "excerpt":"Who really runs New Lanta's districts — public faces and private hands.", 
+    "img": "assets/images/articles/redlight.png",
+    "full": "The power outage affected over 300,000 residents, leading to traffic jams and interrupted broadcasts. Officials cite sabotage from the lower industrial sectors...",
+    "related": ["politics"]
+  },
+  { 
+    "id":7, 
+    "title":"Lifestyle: Neon Fashion", 
+    "cat":"lifestyle", 
+    "excerpt":"A photo essay of the style found under New Lanta's lights.", 
+    "img": "assets/images/articles/redlight.png",
+    "full": "The power outage affected over 300,000 residents, leading to traffic jams and interrupted broadcasts. Officials cite sabotage from the lower industrial sectors...",
+    "related": ["lifestyle"]
+  }
+]

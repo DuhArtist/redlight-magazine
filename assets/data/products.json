@@ -1,0 +1,86 @@
+[
+  {
+    "id": "rose-charm",
+    "name": "Rose Guard Pendant",
+    "category": "accessories",
+    "image": "assets/images/shop/pussy-pop-sweater-thumb.webp",
+    "gallery": [
+      "assets/images/shop/pussy-pop-sweater-thumb.webp"
+    ],
+    "price": "$45",
+    "description": "A finely crafted gold pendant inspired by the Rose Guard insignia. Comes with certificate of authenticity.",
+    "included": ["Pendant", "Velvet case", "Certificate of authenticity"],
+    "link": "#",
+    "related": ["rose-tee", "heaux-pin"]
+  },
+  {
+    "id": "digital-pack",
+    "name": "Digital Heaux Bundle Vol.1",
+    "category": "digital",
+    "image": "assets/images/shop/bella-bebop-wallpaper-thumb.png",
+    "gallery": [
+      "assets/images/shop/bella-bebop-wallpaper-thumb.png"
+    ],
+    "price": "$15",
+    "description": "Includes 5 premium wallpapers, 3 unreleased short stories, and an exclusive RedLight soundtrack loop.",
+    "included": ["5 Wallpapers", "3 Short Stories (PDF)", "Soundtrack Loop (MP3)"],
+    "link": "#",
+    "related": ["bella-drop"]
+  },
+  {
+    "id": "home-candle",
+    "name": "Heaux Flame Candle",
+    "category": "home/decor",
+    "image": "assets/images/shop/creme-luxe-pants.webp",
+    "gallery": [
+      "assets/images/shop/creme-luxe-pants.webp"
+    ],
+    "price": "$28",
+    "description": "Soy wax candle infused with rose and vanilla. Scent inspired by the Black Moon club.",
+    "included": ["12oz Candle", "Gift Box", "Thank-you Card"],
+    "link": "#",
+    "related": ["heaux-pin"]
+  },
+  {
+    "id": "rose-tee",
+    "name": "Rose Guard Tee",
+    "category": "apparel",
+    "image": "assets/images/shop/power-puff-pink-thumb.webp",
+    "gallery": [
+      "assets/images/shop/power-puff-pink-thumb.webp"
+    ],
+    "price": "$35",
+    "description": "Soft-touch cotton tee with gold Rose Guard print. Designed for comfort and confidence.",
+    "included": ["T-shirt", "Holographic Sticker", "Care Card"],
+    "link": "#",
+    "related": ["rose-charm"]
+  },
+  {
+    "id": "heaux-pin",
+    "name": "Limited Edition Heaux Pin",
+    "category": "limited edition",
+    "image": "assets/images/shop/sade-longsleeve-thumb.webp",
+    "gallery": [
+      "assets/images/shop/sade-longsleeve-thumb.webp"
+    ],
+    "price": "$20",
+    "description": "Limited-run enamel pin featuring the RedLight insignia. Comes in velvet pouch with collector’s card.",
+    "included": ["Collector Pin", "Velvet Pouch", "Collector Card"],
+    "link": "#",
+    "related": ["rose-tee", "rose-charm"]
+  },
+  {
+    "id": "bella-drop",
+    "name": "Bubble Gum x RedLight Collab Hoodie",
+    "category": "collabs",
+    "image": "assets/images/shop/lexi-diner-wallpaper-thumb.png",
+    "gallery": [
+      "assets/images/shop/lexi-diner-wallpaper-thumb.png"
+    ],
+    "price": "$60",
+    "description": "Collaboration with artist K1NG celebrating Bella Gunn’s rise. Ultra-soft fleece hoodie with screenprint details.",
+    "included": ["Hoodie", "Collab Card", "Digital Art Download"],
+    "link": "#",
+    "related": ["heaux-pin", "digital-pack"]
+  }
+]

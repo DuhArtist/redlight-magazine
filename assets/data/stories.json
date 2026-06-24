@@ -1,0 +1,101 @@
+[
+  {
+    "id": "bella-first-night",
+    "title": "Bella's First Night",
+    "excerpt": "Her first night at the Black Moon revealed more than a city could hold — a promise, a hurt, and the beginning of a brand new violence.",
+    "image": "assets/images/stories/main-heauxs/crying-bella.webp",
+    "category": "main-heauxs",
+    "date": "2025-02-28",
+    "author": "RedLight",
+    "character": "bella",
+    "fullLink": "#"
+  },
+  {
+    "id": "lelu-lesson",
+    "title": "Lelu's Lesson",
+    "excerpt": "How to move like water, how to keep secrets, and when to become the thing that saved you.",
+    "image": "assets/images/stories/main-heauxs/crying-pea.webp",
+    "category": "main-heauxs",
+    "date": "2025-03-05",
+    "author": "RedLight",
+    "character": "lelu",
+    "fullLink": "#"
+  },
+  {
+    "id": "two-tone-confession",
+    "title": "Two-Tone's Confession",
+    "excerpt": "There are rules on the street that sometimes don't apply to the people you love.",
+    "image": "assets/images/stories/main-heauxs/kandi.JPG",
+    "category": "main-heauxs",
+    "date": "2025-03-11",
+    "author": "RedLight",
+    "character": "two-tone",
+    "fullLink": "#"
+  },
+  {
+    "id": "love-letters-cherry",
+    "title": "Love Letters from Cherry Street",
+    "excerpt": "A stack of postcards, a shopfront that smells like tea, and letters someone never sent.",
+    "image": "assets/images/stories/main-heauxs/black-moon-bella.webp",
+    "category": "civilians",
+    "date": "2025-01-18",
+    "author": "M. Rose",
+    "character": "aaliyah",
+    "fullLink": "story-love-letters.html"
+  },
+  {
+    "id": "milk-and-honey",
+    "title": "Milk & Honey",
+    "excerpt": "The small rituals that keep folks alive in the middle of a city that's always on.",
+    "image": "assets/images/anatomy/placeholder.webp",
+    "category": "civilians",
+    "date": "2025-02-05",
+    "author": "H. Devine",
+    "character": "honey",
+    "fullLink": "story-milk-honey.html"
+  },
+  {
+    "id": "the-garden-speaks",
+    "title": "The Garden Speaks",
+    "excerpt": "Roses know gossip. They keep it rooted and tell only those who water properly.",
+    "image": "assets/images/anatomy/placeholder.webp",
+    "category": "roses",
+    "date": "2025-03-01",
+    "author": "RedLight",
+    "character": null,
+    "fullLink": "#"
+  },
+  {
+    "id": "mocha-curtain",
+    "title": "Behind the Curtain with Mocha",
+    "excerpt": "An interview that starts at the dressing room mirror and ends in confession.",
+    "image": "assets/images/anatomy/placeholder.webp",
+    "category": "interviews",
+    "date": "2025-02-20",
+    "author": "RedLight",
+    "character": "mya",
+    "fullLink": "#"
+  },
+  {
+    "id": "things-i-never-said",
+    "title": "The Things I Never Said",
+    "excerpt": "A confession left on a napkin between sets; a prayer disguised as a postcard.",
+    "image": "assets/images/anatomy/placeholder.webp",
+    "category": "confessions",
+    "date": "2025-02-12",
+    "author": "Anonymous",
+    "character": null,
+    "fullLink": "#"
+  },
+  {
+    "id": "powder-room-pages",
+    "title": "Pages from the Powder Room",
+    "excerpt": "The diary of a girl who loved her city like you love something that breaks often.",
+    "image": "assets/images/anatomy/placeholder.webp",
+    "category": "diaries",
+    "date": "2025-01-05",
+    "author": "T. Luv",
+    "character": "tasha",
+    "fullLink": "#"
+  }
+]

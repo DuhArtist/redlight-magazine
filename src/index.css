@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Roboto&family=Playfair+Display:wght@600&family=Damion&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html, body {
+    @apply m-0 p-0 w-full overflow-x-hidden;
+  }
+
+  body {
+    @apply bg-black text-white font-roboto;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-redlight-red outline-offset-2;
+  }
+
+  a, button {
+    @apply focus:outline-none focus-visible:outline-redlight-red;
+  }
+}
+
+@layer components {
+  .glow-text {
+    text-shadow: 0 0 10px theme('colors.redlight.pink'),
+                 0 0 20px theme('colors.redlight.purple');
+  }
+
+  .section-padding {
+    @apply px-4 md:px-8 lg:px-16 py-12 md:py-16;
+  }
+
+  .container-narrow {
+    @apply max-w-6xl mx-auto;
+  }
+}
+
+/* Custom Swiper Pagination Styles */
+.swiper-pagination {
+  position: absolute !important;
+  display: flex !important;
+  gap: 8px !important;
+  z-index: 10 !important;
+}
+
+.swiper-pagination-bullet {
+  width: 8px !important;
+  height: 8px !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+  opacity: 1 !important;
+  transition: all 0.3s ease !important;
+}
+
+.swiper-pagination-bullet-active {
+  width: 24px !important;
+  background: #DC143C !important;
+  border-radius: 4px !important;
+}
+
+/* Floating Card Styles */
+.floating-card {
+  width: 100%;
+  max-width: 320px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 0.6rem;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  backdrop-filter: blur(8px);
+  will-change: transform, box-shadow;
+}
+
+.floating-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+}
+
+/* Article Card Styles */
+.article-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  padding-top: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.article-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+/* Rose Card Styles */
+.rose-card {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  z-index: 2;
+  position: relative;
+}
+
+.rose-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.rose-card img {
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rose-card:hover img {
+  transform: scale(1.02);
+}
+
+/* Featured Rose Container */
+.rose-feature {
+  display: grid;
+  width: 100%;
+  height: auto;
+  background-color: black;
+  color: #FFF;
+  margin: 1rem 0;
+  grid-template-columns: 1fr;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .rose-feature {
+    grid-template-columns: 1fr 1fr;
+    height: 500px; /* Fixed height to ensure full image display */
+  }
+}
+
+.rose-feature-image {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.rose-feature-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}

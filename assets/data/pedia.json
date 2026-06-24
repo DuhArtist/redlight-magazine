@@ -1,0 +1,52 @@
+[
+  {
+    "id": "black-moon-necklace",
+    "name": "Black Moon Necklace",
+    "category": "artifacts",
+    "icon": "fa-gem",
+    "image": "assets/images/pedia/black-moon-necklace.jpg",
+    "short": "A silver pendant said to contain the trapped aura of a fallen dancer.",
+    "full": "Worn by Lelu—the owner of the Black Moon Club—this relic glows when danger nears. The chain was forged from bullets pulled from her first love.",
+    "related": ["new-lanta-city", "heaux-energy"]
+  },
+  {
+    "id": "new-lanta-city",
+    "name": "New Lanta City",
+    "category": "places",
+    "icon": "fa-city",
+    "image": "assets/images/pedia/new-lanta.jpg",
+    "short": "A rebuilt Atlanta pulsing with neon ambition and digital vice.",
+    "full": "Known as ‘The City of Opportunity,’ New Lanta is both paradise and predator. Every block hums with stories waiting to be told.",
+    "related": ["black-moon-necklace", "rose-guard"]
+  },
+  {
+    "id": "heaux-energy",
+    "name": "Heaux Energy",
+    "category": "concepts",
+    "icon": "fa-fire",
+    "image": "assets/images/pedia/heaux-energy.jpg",
+    "short": "Spiritual current born of self-love and survival.",
+    "full": "A divine feminine frequency channeled through sensuality and strength—the source of every RedLight heroine’s inner power.",
+    "related": ["rose-code"]
+  },
+  {
+    "id": "rose-guard",
+    "name": "Rose Guard",
+    "category": "organizations",
+    "icon": "fa-shield-heart",
+    "image": "assets/images/pedia/rose-guard.jpg",
+    "short": "An underground security network protecting entertainers and civilians alike.",
+    "full": "Founded by Two-Tone after the Slime Wars, the Rose Guard keeps order in the chaos of nightlife.",
+    "related": ["new-lanta-city", "rose-code"]
+  },
+  {
+    "id": "rose-code",
+    "name": "Rose Code",
+    "category": "terminology",
+    "icon": "fa-book",
+    "image": "assets/images/pedia/rose-code.jpg",
+    "short": "Unspoken etiquette among RedLight women.",
+    "full": "A mix of loyalty, privacy, and presentation. To break the Code is to exile yourself from the circle.",
+    "related": ["rose-guard", "heaux-energy"]
+  }
+]

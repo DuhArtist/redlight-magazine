@@ -1,0 +1,60 @@
+[
+  {
+    "id": "neo-tellus",
+    "title": "Neo-Tellus",
+    "sub": "The world beyond New Lanta",
+    "img": "assets/images/locations/neo-tellus.webp",
+    "teaser": "The outer world — rebuilt and reorganized under corporate dominion.",
+    "full": "The Crimson District is where the city's energy never sleeps. Beyond the strip clubs and high-end lounges lies a world of underground art and politics. The district acts as a bridge between entertainment and influence...",
+    "population": "1.2B",
+    "governance": "Neo Coalition",
+    "related": ["black-moon", "new-lanta"]
+  },
+  {
+    "id": "new-lanta",
+    "title": "New Lanta City",
+    "sub": "Sin or Ascend",
+    "img": "assets/images/locations/new-lanta.webp",
+    "teaser": "The city of opportunity — for everybody.",
+    "population": "500K",
+    "mayor": "Kendra Perkis",
+    "exports": "Technology, synthetic food, robotics"
+  },
+  {
+    "id": "red-light",
+    "title": "Red Light District",
+    "sub": "Pleasure & Commerce",
+    "img": "assets/images/locations/redlight-district.webp",
+    "teaser": "A dense slice of the city where desire, commerce, and protection intersect.",
+    "population": "120K",
+    "crime_rate": "High",
+    "nightlife": "Unmatched"
+  },
+  {
+    "id": "black-moon",
+    "title": "The Black Moon",
+    "sub": "Lelu’s Den",
+    "img": "assets/images/locations/black-moon.webp",
+    "teaser": "A spiritual den for the empowered and the lost.",
+    "population": "Private",
+    "leader": "Lelu (Lilith Incarnate)"
+  },
+  {
+    "id": "the-strip",
+    "title": "The Black Moon",
+    "sub": "Lelu’s Den",
+    "img": "assets/images/locations/the-strip.webp",
+    "teaser": "A spiritual den for the empowered and the lost.",
+    "population": "Private",
+    "leader": "Lelu (Lilith Incarnate)"
+  },
+  {
+    "id": "aphrodite-gardens",
+    "title": "The Black Moon",
+    "sub": "Lelu’s Den",
+    "img": "assets/images/locations/aphrodite.webp",
+    "teaser": "A spiritual den for the empowered and the lost.",
+    "population": "Private",
+    "leader": "Lelu (Lilith Incarnate)"
+  }
+]

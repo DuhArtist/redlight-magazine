@@ -1,0 +1,5 @@
+# Ensure JavaScript files are served with the correct MIME type
+AddType application/javascript .js .mjs .jsx .ts .tsx
+
+# Optional: Ensure CSS files are correct (good practice)
+AddType text/css .css

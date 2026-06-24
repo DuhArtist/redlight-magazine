@@ -1,0 +1,158 @@
+[
+  {
+    "id": "bella",
+    "group": "featured",
+    "name": "Bella Gunn",
+    "image": "assets/images/featured/black-moon-bella.png",
+    "bio": "Dad died. I killed my n****. And now I strip for the baddie who stopped me from killing myself. Life right?",
+    "background": "Bella is the daughter of the late war hero, Major Gunn, who taught Bella how to shoot, fight, and survive before she turned 6.\n\nAfter nearly becoming a victim of her mother's boyfriend's rage and lust, Bella ran — only to find herself trapped once again behind four walls of struggle, survival, and betrayal. When the n**** Bella thought she loved tries to kill her, she defends herself, finding herself running away from another home soon after. Only this time, she has a hit on her head.\n\nShe longs for home and admires the idea of finding family, but refuses to be vulnerable and open again due to her past. She's convinced love is just a plot for pain. \n\nNevertheless, she finds herself in the graces of Lelu, a powerful new ally who saves Bella from suicide and invites her to the Black Moon Family.",
+    "affiliations": "Black Moon Family • Shiesty Slimes (Former)",
+    "organization": "black-moon",
+    "related": ["lelu", "two-tone"],
+    "stories": [
+      { "title": "Bella's First Night", "href": "#" },
+      { "title": "Diamond Kitty Origins", "href": "#" }
+    ],
+    "products": [
+      { "src": "assets/images/shop/bella-bebop-wallpaper-thumb.png", "href": "#" },
+      { "src": "assets/images/shop/power-puff-pink-thumb.webp", "href": "#" }
+    ],
+    "shopLink": "#"
+  },
+  {
+    "id": "lelu",
+    "group": "featured",
+    "name": "Lelu",
+    "image": "assets/images/featured/kandi.JPG",
+    "bio": "Lelu runs the Black Moon. She moves like water and collects souls with a mother's hand. Many say she's older than she looks.",
+    "background": "The mysterious matron of the Black Moon, Lelu has been guiding lost souls for longer than anyone can remember. Her origins are shrouded in mystery, but her loyalty to her 'family' is unquestionable.",
+    "affiliations": "Black Moon • Matron",
+    "organization": "black-moon",
+    "related": ["bella", "two-tone"],
+    "stories": [
+      { "title": "The Black Moon", "href": "#" },
+      { "title": "Lelu's Lore", "href": "#" }
+    ],
+    "products": [
+      { "src": "assets/images/products/p-3.jpg", "href": "#" }
+    ],
+    "shopLink": "#"
+  },
+  {
+    "id": "two-tone",
+    "group": "featured",
+    "name": "Two-Tone",
+    "image": "assets/images/featured/crying-pea.jpg",
+    "bio": "Two-Tone is the city's enforcer. Not evil, just honest about the prices of survival. She knows the streets and knows when to forgive.",
+    "background": "Rising through the ranks of Black Moon through sheer determination and street smarts, Two-Tone maintains order in New Lanta's underworld with a unique code of honor.",
+    "affiliations": "Black Moon • Enforcer",
+    "organization": "black-moon",
+    "related": ["bella", "lelu"],
+    "stories": [
+      { "title": "Two-Tone's Rules", "href": "#" }
+    ],
+    "products": [
+      { "src": "assets/images/products/p-4.jpg", "href": "#" },
+      { "src": "assets/images/products/p-5.jpg", "href": "#" }
+    ],
+    "shopLink": "#"
+  },
+  {
+    "id": "aniyah",
+    "group": "civilians",
+    "name": "Aniyah Monet",
+    "image": "assets/images/civilians/aniyah.png",
+    "bio": "Aniyah paints the alleys in colors that scare the morning. She sells prints on the weekends and whispers truth into mic nights.",
+    "background": "A self-taught artist from the industrial district, Aniyah uses the city itself as her canvas. Her murals have become landmarks of resistance and beauty.",
+    "affiliations": "Independent Artist • Street Art Collective",
+    "organization": "artists",
+    "related": ["soley", "ember"],
+    "stories": [{ "title": "Aniyah's Murals", "href": "#" }],
+    "products": [{ "src": "assets/images/products/p-6.jpg", "href": "#" }],
+    "shopLink": "#"
+  },
+  {
+    "id": "soley",
+    "group": "civilians",
+    "name": "Soley Sincere",
+    "image": "assets/images/civilians/soley-sincere.png",
+    "bio": "I am nothing short of God body",
+    "background": "Sincere is a foot model in",
+    "affiliations": "Zine Publisher • Event Organizer",
+    "organization": "artists",
+    "related": ["aniyah", "beaast"],
+    "stories": [{ "title": "The Zine of Sincere", "href": "#" }],
+    "products": [{ "src": "assets/images/products/p-7.jpg", "href": "#" }],
+    "shopLink": "#"
+  },
+  {
+    "id": "ember",
+    "group": "civilians",
+    "name": "Ember Spark",
+    "image": "assets/images/civilians/ember.png",
+    "bio": "Mya spins records at the smaller rooms and collects lonely lovers for the late hours.",
+    "background": "A DJ and curator of nightlife experiences, Ember creates sonic landscapes that transform ordinary nights into unforgettable journeys through sound and connection.",
+    "affiliations": "DJ • Nightlife Curator",
+    "organization": "entertainment",
+    "related": ["beaast", "hailey"],
+    "stories": [{ "title": "Vinyl Nights", "href": "#" }],
+    "products": [{ "src": "assets/images/products/p-8.jpg", "href": "#" }],
+    "shopLink": "#"
+  },
+  {
+    "id": "beaast",
+    "group": "civilians",
+    "name": "DatBitch Beaast",
+    "image": "assets/images/civilians/beaast.png",
+    "bio": "Tasha dances with the rhythm of New Lanta, and when she laughs the club remembers how to be alive.",
+    "background": "Rising rap sensation blending raw street poetry with infectious beats. Her performances are legendary for their energy and authenticity.",
+    "affiliations": "Music Artist • Performer",
+    "organization": "entertainment",
+    "related": ["ember", "eboni"],
+    "stories": [{ "title": "First Night at the Club", "href": "#" }],
+    "products": [{ "src": "assets/images/products/p-9.jpg", "href": "#" }],
+    "shopLink": "#"
+  },
+  {
+    "id": "eboni",
+    "group": "civilians",
+    "name": "Eboni Rae",
+    "image": "assets/images/civilians/eboni.png",
+    "bio": "Honey runs a small boutique and knows all the gossip, the good kind that helps instead of breaking you.",
+    "background": "Fashion influencer and boutique owner who turned her eye for style into a thriving business and community hub in the downtown district.",
+    "affiliations": "Fashion Designer • Boutique Owner",
+    "organization": "business",
+    "related": ["tyni", "hailey"],
+    "stories": [{ "title": "Boutique Confessions", "href": "#" }],
+    "products": [{ "src": "assets/images/products/p-10.jpg", "href": "#" }],
+    "shopLink": "#"
+  },
+  {
+    "id": "tyni",
+    "group": "civilians",
+    "name": "Tyni Ty",
+    "image": "assets/images/civilians/tyni.png",
+    "bio": "A poet in the subway stations. Kendra turns the city commute into a prayer.",
+    "background": "Performance poet and spoken word artist who brings beauty to the city's transit systems, offering moments of reflection in the daily grind.",
+    "affiliations": "Poet • Performance Artist",
+    "organization": "artists",
+    "related": ["soley", "aniyah"],
+    "stories": [{ "title": "Station Poems", "href": "#" }],
+    "products": [{ "src": "assets/images/products/p-11.jpg", "href": "#" }],
+    "shopLink": "#"
+  },
+  {
+    "id": "hailey",
+    "group": "civilians",
+    "name": "Hail Hailey",
+    "image": "assets/images/civilians/hailey-potrait.png",
+    "bio": "They pushed me to the streets. Now they tryna kill what they created.",
+    "background": "A survivor navigating the dangerous edges of New Lanta, Hailey's story is one of resilience and the search for redemption in a city that wants her gone.",
+    "affiliations": "Survivor • Fugitive",
+    "organization": "independents",
+    "related": ["ember", "eboni"],
+    "stories": [{ "title": "Made The News", "href": "#" }],
+    "products": [{ "src": "assets/images/products/p-11.jpg", "href": "#" }],
+    "shopLink": "#"
+  }
+]
