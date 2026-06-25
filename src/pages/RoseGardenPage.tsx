@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom'
 
 const RoseGardenPage: React.FC = () => {
   const [search, setSearch] = useState('')
-  const [category, setCategory] = useState<'roses' | 'artwork' | 'design' | 'collabs'>('roses')
-  
+  const [category, setCategory] = useState<'rose' | 'art' | 'collab'>('rose')
   const { data: rosesData, isLoading } = useGetRosesQuery({
     page: 1,
     limit: 12,
@@ -239,7 +238,7 @@ const RoseGardenPage: React.FC = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .rose-card {
           width: 100%;
           height: 100%;

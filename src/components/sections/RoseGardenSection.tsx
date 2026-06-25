@@ -98,8 +98,10 @@ const RoseGardenSection: React.FC = () => {
               <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-6">
                 {currentCategory.featuredItem.name}
               </h2>
-              <p className="text-gray-300 mb-8  text-lg leading-relaxed">
-                {currentCategory.featuredItem.bio || currentCategory.featuredItem.description}
+              <p className="text-gray-300 mb-8 text-lg leading-relaxed">
+                {currentCategory.featuredItem.bio || 
+                (currentCategory.featuredItem as any).description || 
+                'Creative expression beyond skin...'}
               </p>
               <button className="self-start border-2 border-redlight-red text-redlight-red hover:bg-redlight-red hover:text-white px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 text-lg font-semibold">
                 Learn About Roses
@@ -144,7 +146,7 @@ const RoseGardenSection: React.FC = () => {
                   </div>
                   <div className="p-6 text-center">
                     <h3 className="font-playfair font-bold text-xl text-gray-900 mb-2">{rose.name}</h3>
-                    <p className="font-bold text-sm text-gray-400 mb-2">{rose.type}</p>
+                    <p className="font-bold text-sm text-gray-400 mb-2">{rose.type || 'Rose'}</p>
                     
                   </div>
                 </Link>

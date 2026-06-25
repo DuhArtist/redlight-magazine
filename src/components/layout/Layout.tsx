@@ -10,7 +10,7 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const isLoading = useSelector((state: RootState) => state.ui.isLoading)
+  const _isLoading = useSelector((state: RootState) => state.ui.isLoading)
 
   return (
     <div className="min-h-screen flex flex-col bg-dark-bg">

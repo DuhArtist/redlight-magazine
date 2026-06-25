@@ -10,6 +10,7 @@ interface Product {
   price: string
   category: string
   image: string
+  imageUrl?: string
   description: string
   gallery?: string[]
   included?: string[]
@@ -247,7 +248,7 @@ const ShopSection: React.FC = () => {
           {filteredProducts.map((product) => (
             <ProductCard
               key={product.id}
-              image={product.image || product.imageUrl}
+              image={product.image || product.imageUrl || '/assets/images/placeholder.jpg'}
               name={product.name}
               price={product.price}
               category={product.category}

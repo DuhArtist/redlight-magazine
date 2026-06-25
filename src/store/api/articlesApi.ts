@@ -3,7 +3,7 @@ import { Article, ApiResponse } from '@/types'
 import { ArticleFilters } from '@/types/api.types'
 
 // Get the base URL from environment variables
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
+const _API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
 export const articlesApi = createApi({
   reducerPath: 'articlesApi',

@@ -74,7 +74,7 @@ const ArticlePage: React.FC = () => {
           <div className="flex items-center gap-6 text-gray-500 text-sm mb-8">
             <span className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              {article.date}
+              {article.date?.toLocaleDateString() || article.date}
             </span>
             <span className="flex items-center gap-2">
               <User className="w-4 h-4" />

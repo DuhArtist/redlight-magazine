@@ -5,12 +5,10 @@ export interface PaginationParams {
   sortOrder?: 'asc' | 'desc'
 }
 
-export interface ArticleFilters extends PaginationParams {
+export interface ArticleFilters extends Partial<PaginationParams> {
   category?: string
   featured?: boolean
   search?: string
-  page?: number
-  limit?: number
   sortBy?: string
   tags?: string[]
 }
