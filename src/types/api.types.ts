@@ -13,7 +13,7 @@ export interface ArticleFilters extends Partial<PaginationParams> {
 }
 
 export interface RoseFilters extends Partial<PaginationParams> {
-  category?: 'rose' | 'art' | 'collab'
+  category?: 'rose' | 'art' | 'collab' | 'all'
   featured?: boolean
   search?: string // Add this!
 }
