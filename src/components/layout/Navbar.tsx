@@ -12,8 +12,6 @@ const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false)
   const [isInquiryOpen, setIsInquiryOpen] = useState(false)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const location = useLocation()
   const mobileMenuOpen = useSelector((state: RootState) => state.ui.mobileMenuOpen)
 
   const navItems = [

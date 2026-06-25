@@ -9,6 +9,10 @@ export interface ArticleFilters extends PaginationParams {
   category?: string
   featured?: boolean
   search?: string
+  page?: number
+  limit?: number
+  sortBy?: string
+  tags?: string[]
 }
 
 export interface RoseFilters extends PaginationParams {

@@ -1,13 +1,19 @@
 export interface Article {
   id: string
   title: string
+  slug: string
   excerpt: string
   content: string
   imageUrl: string
-  date: string
+  date: string | Date
   category: string
-  author: string
+  author: string | { name: string }
   featured: boolean
+  published: boolean
+  views: number  // Add this
+  tags: string[]  // Add this
+  createdAt?: string
+  updatedAt?: string
 }
 
 export interface Rose {

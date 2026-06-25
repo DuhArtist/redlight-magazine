@@ -247,7 +247,7 @@ const ShopSection: React.FC = () => {
           {filteredProducts.map((product) => (
             <ProductCard
               key={product.id}
-              image={product.imageUrl}
+              image={product.image || product.imageUrl}
               name={product.name}
               price={product.price}
               category={product.category}

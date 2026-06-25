@@ -20,7 +20,7 @@ const RoseGardenPage: React.FC = () => {
   const categories = [
     { id: 'roses', label: 'Roses' },
     { id: 'artwork', label: 'Artwork' },
-    { id: 'design', label: 'Design' },
+    { id: 'art', label: 'Design' },
     { id: 'collabs', label: 'Collabs' },
   ]
 

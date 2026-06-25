@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
 
@@ -11,9 +11,6 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isLoading = useSelector((state: RootState) => state.ui.isLoading)
-
-  // REMOVE the loading spinner logic - it's causing infinite loading
-  // We'll handle loading states per component instead
 
   return (
     <div className="min-h-screen flex flex-col bg-dark-bg">

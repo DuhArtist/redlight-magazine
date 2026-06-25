@@ -5,15 +5,15 @@ import { z } from 'zod'
 import { Save, X } from 'lucide-react'
 
 const articleSchema = z.object({
-  title: z.string().min(1, 'Title is required').max(200, 'Title too long'),
-  excerpt: z.string().min(1, 'Excerpt is required').max(500, 'Excerpt too long'),
+  title: z.string().min(1, 'Title is required'),
+  excerpt: z.string().min(1, 'Excerpt is required'),
   content: z.string().min(1, 'Content is required'),
-  imageUrl: z.string().url('Valid URL required'),
+  imageUrl: z.string().optional(),
   category: z.string().min(1, 'Category is required'),
   author: z.string().min(1, 'Author is required'),
-  featured: z.boolean().default(false),
-  published: z.boolean().default(false),
-  tags: z.array(z.string()).default([]),
+  featured: z.boolean().optional().default(false),
+  tags: z.array(z.string()).optional().default([]),
+  published: z.boolean().optional().default(false),
 })
 
 type ArticleFormData = z.infer<typeof articleSchema>
@@ -31,27 +31,14 @@ const ArticleForm: React.FC<ArticleFormProps> = ({
   onCancel,
   isSubmitting = false,
 }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-    setValue,
-  } = useForm<ArticleFormData>({
-    resolver: zodResolver(articleSchema),
-    defaultValues: {
-      title: '',
-      excerpt: '',
-      content: '',
-      imageUrl: '',
-      category: '',
-      author: '',
-      featured: false,
-      published: false,
-      tags: [],
-      ...initialData,
-    },
-  })
+  const { register, handleSubmit, formState: { errors } } = useForm({
+  resolver: zodResolver(articleSchema),
+  defaultValues: {
+    featured: false,
+    tags: [],
+    published: false,
+  }
+})
 
   const [tagInput, setTagInput] = React.useState('')
   const tags = watch('tags')
