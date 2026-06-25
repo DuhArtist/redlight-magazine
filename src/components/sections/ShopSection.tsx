@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ProductCard } from '@/components/shared/Card'
-import { useGetProductsQuery } from '@/store/api/shopApi'
-
 
 interface Product {
   id: string

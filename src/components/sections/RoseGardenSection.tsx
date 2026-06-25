@@ -5,6 +5,14 @@ import Card from '@/components/shared/Card'
 import { ChevronRight, Flower, Palette, Brush } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
+// Define a type for the featured item
+interface FeaturedItem {
+  name: string
+  imageUrl: string
+  bio?: string
+  description?: string
+}
+
 const RoseGardenSection: React.FC = () => {
   const { data: featuredRose } = useGetFeaturedRoseQuery()
   const { data: rosesData } = useGetRosesQuery({ page: 1, limit: 6 })
@@ -18,7 +26,7 @@ const RoseGardenSection: React.FC = () => {
     { id: 'design', label: 'Design', icon: Brush },
   ]
 
-  // Mock data for different categories (you would fetch this based on activeCategory)
+  // Mock data for different categories
   const categoryData = {
     roses: {
       featuredTitle: "Become the first",
@@ -41,6 +49,7 @@ const RoseGardenSection: React.FC = () => {
   }
 
   const currentCategory = categoryData[activeCategory]
+  const featuredItem = currentCategory.featuredItem as FeaturedItem
 
   return (
     <section className="section-padding bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
@@ -96,12 +105,10 @@ const RoseGardenSection: React.FC = () => {
                 {currentCategory.featuredTitle}
               </p>
               <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-6">
-                {currentCategory.featuredItem.name}
+                {featuredItem.name}
               </h2>
               <p className="text-gray-300 mb-8 text-lg leading-relaxed">
-                {currentCategory.featuredItem.bio || 
-                (currentCategory.featuredItem as any).description || 
-                'Creative expression beyond skin...'}
+                {featuredItem.bio || featuredItem.description || 'Creative expression beyond skin...'}
               </p>
               <button className="self-start border-2 border-redlight-red text-redlight-red hover:bg-redlight-red hover:text-white px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 text-lg font-semibold">
                 Learn About Roses
@@ -109,8 +116,8 @@ const RoseGardenSection: React.FC = () => {
             </div>
             <div className="relative h-full">
               <img 
-                src={currentCategory.featuredItem.imageUrl} 
-                alt={currentCategory.featuredItem.name}
+                src={featuredItem.imageUrl} 
+                alt={featuredItem.name}
                 className="absolute inset-0 w-full h-full object-cover"
               />
               {/* Gradient overlay */}
@@ -137,17 +144,18 @@ const RoseGardenSection: React.FC = () => {
             >
               <Card hoverable className="overflow-hidden h-full bg-white shadow-lg hover:shadow-2xl transition-shadow duration-300">
                 <Link to={`/rose/${rose.id}`} className="block h-full">
-                  <div className=" overflow-hidden bg-gray-100">
+                  <div className="overflow-hidden bg-gray-100">
                     <img 
                       src={rose.imageUrl} 
                       alt={rose.name}
-                      className="w-full h-full object-cover  transition-transform duration-700"
+                      className="w-full h-full object-cover transition-transform duration-700"
                     />
                   </div>
                   <div className="p-6 text-center">
                     <h3 className="font-playfair font-bold text-xl text-gray-900 mb-2">{rose.name}</h3>
-                    <p className="font-bold text-sm text-gray-400 mb-2">{rose.type || 'Rose'}</p>
-                    
+                    <p className="font-bold text-sm text-gray-400 mb-2">
+                      {(rose as any).type || 'Rose'}
+                    </p>
                   </div>
                 </Link>
               </Card>

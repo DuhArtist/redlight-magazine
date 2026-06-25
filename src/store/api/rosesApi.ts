@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Rose, ApiResponse } from '@/types'
 import { RoseFilters } from '@/types/api.types'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
+// Comment out unused variable or use it
+// const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
 export const rosesApi = createApi({
   reducerPath: 'rosesApi',
@@ -26,6 +27,7 @@ export const rosesApi = createApi({
     getRoses: builder.query<ApiResponse<Rose[]>, RoseFilters>({
       query: (params) => {
         const queryParams = new URLSearchParams()
+        // Fix: Check if category exists and is not undefined before comparing
         if (params.category && params.category !== 'all') {
           queryParams.append('category', params.category)
         }
@@ -44,19 +46,22 @@ export const rosesApi = createApi({
           url: `/roses${queryString ? `?${queryString}` : ''}`,
         }
       },
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.data.map(({ id }) => ({ type: 'Roses' as const, id })),
-              { type: 'Roses', id: 'LIST' },
-            ]
-          : [{ type: 'Roses', id: 'LIST' }],
+      providesTags: (result) => {
+        // Fix: Check if result and result.data exist
+        if (result && result.data) {
+          return [
+            ...result.data.map(({ id }) => ({ type: 'Roses' as const, id })),
+            { type: 'Roses', id: 'LIST' },
+          ]
+        }
+        return [{ type: 'Roses', id: 'LIST' }]
+      },
     }),
 
     // Get single rose by ID
     getRoseById: builder.query<Rose, string>({
       query: (id) => `/roses/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Roses', id }],
+      providesTags: (_result, _error, id) => [{ type: 'Roses', id }],
     }),
   }),
 })

@@ -2,16 +2,17 @@ import React, { ReactNode } from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import { motion } from 'framer-motion'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store'
+// Remove useSelector and RootState imports if not needed
+// import { useSelector } from 'react-redux'
+// import { RootState } from '@/store'
 
 interface LayoutProps {
   children: ReactNode
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  // Use _ prefix for unused variable
-  const _isLoading = useSelector((state: RootState) => state.ui.isLoading)
+  // Remove the unused isLoading variable entirely
+  // const _isLoading = useSelector((state: RootState) => state.ui.isLoading)
 
   return (
     <div className="min-h-screen flex flex-col bg-dark-bg">
