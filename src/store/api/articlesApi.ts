@@ -1,72 +1,47 @@
-import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Article, ApiResponse } from '@/types'
 import { ArticleFilters } from '@/types/api.types'
-import { mockArticles } from '@/utils/mockData'
+
+// Get the base URL from environment variables
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
 export const articlesApi = createApi({
   reducerPath: 'articlesApi',
-  baseQuery: fakeBaseQuery(),  // This tells RTK Query to use mock data
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'http://localhost:5001/api',
+    credentials: 'include',
+    prepareHeaders: (headers) => {
+      headers.set('Content-Type', 'application/json')
+      return headers
+    },
+  }),
   tagTypes: ['Articles'],
   endpoints: (builder) => ({
     getFeaturedArticles: builder.query<Article[], void>({
-      queryFn: () => {
-        // Return mock data instead of making API call
-        return { data: mockArticles.featured }
-      },
+      query: () => '/articles/featured',
       providesTags: ['Articles'],
+      transformResponse: (response: Article[]) => response,
     }),
     getLatestArticles: builder.query<Article[], void>({
-      queryFn: () => {
-        return { data: mockArticles.latest }
-      },
+      query: () => '/articles/latest',
       providesTags: ['Articles'],
+      transformResponse: (response: Article[]) => response,
     }),
     getArticleById: builder.query<Article, string>({
-      queryFn: (id) => {
-        // Find article by ID in mock data
-        const allArticles = [...mockArticles.featured, ...mockArticles.latest]
-        const article = allArticles.find(a => a.id === id) || mockArticles.featured[0]
-        return { data: article }
-      },
+      query: (id) => `/articles/${id}`,
       providesTags: (result, error, id) => [{ type: 'Articles', id }],
     }),
     getArticles: builder.query<ApiResponse<Article[]>, ArticleFilters>({
-      queryFn: (params) => {
-        const allArticles = [...mockArticles.featured, ...mockArticles.latest]
+      query: (params) => {
+        const queryParams = new URLSearchParams()
+        if (params.category && params.category !== 'all') queryParams.append('category', params.category)
+        if (params.search) queryParams.append('search', params.search)
+        if (params.page) queryParams.append('page', params.page.toString())
+        if (params.limit) queryParams.append('limit', params.limit.toString())
+        if (params.sortBy) queryParams.append('sortBy', params.sortBy)
         
-        // Apply filters (mock implementation)
-        let filtered = [...allArticles]
-        
-        if (params.category && params.category !== 'all') {
-          filtered = filtered.filter(article => article.category === params.category)
-        }
-        
-        if (params.search) {
-          const searchLower = params.search.toLowerCase()
-          filtered = filtered.filter(article => 
-            article.title.toLowerCase().includes(searchLower) ||
-            article.excerpt.toLowerCase().includes(searchLower)
-          )
-        }
-        
-        // Pagination
-        const page = params.page || 1
-        const limit = params.limit || 10
-        const startIndex = (page - 1) * limit
-        const endIndex = startIndex + limit
-        const paginated = filtered.slice(startIndex, endIndex)
-        
-        return { 
-          data: {
-            success: true,
-            data: paginated,
-            pagination: {
-              page,
-              limit,
-              total: filtered.length,
-              pages: Math.ceil(filtered.length / limit)
-            }
-          }
+        return {
+          url: `/articles?${queryParams.toString()}`,
         }
       },
       providesTags: ['Articles'],

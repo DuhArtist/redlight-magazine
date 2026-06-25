@@ -23,7 +23,7 @@ export const BaseCard: React.FC<BaseCardProps> = ({
         ${hoverable ? 'hover:bg-white/10 hover:border-gray-700 hover:scale-[1.02]' : ''}
         ${className}
       `}
-      whileHover={hoverable ? { y: -8 } : {}}
+      whileHover={hoverable ? { y: -3 } : {}}
       onClick={onClick}
     >
       {children}
@@ -199,7 +199,7 @@ export const IssueCard: React.FC<IssueCardProps> = ({
         <img 
           src={image} 
           alt={title}
-          className="w-full max-w-xs mx-auto aspect-[3/4] object-cover rounded-lg group-hover:scale-105 transition-transform duration-300 mb-4"
+          className="w-full max-w-xs mx-auto aspect-[3/4] object-cover rounded-lg"
         />
         <div className="mt-4">
           <h2 className="text-xl font-playfair font-bold text-white mb-2">{title}</h2>
@@ -234,7 +234,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <img 
             src={image} 
             alt={name}
-            className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+            className="w-full h-48 object-cover"
           />
         </div>
         <div className="p-4">
@@ -271,7 +271,7 @@ export const ArtDesignCard: React.FC<ArtDesignCardProps> = ({
           <img 
             src={image} 
             alt={title}
-            className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-64 object-cover"
           />
         </div>
         <div className="p-4">

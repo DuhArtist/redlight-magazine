@@ -1,40 +1,25 @@
-import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Product, CartItem, ApiResponse } from '@/types'
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
 export const shopApi = createApi({
   reducerPath: 'shopApi',
-  baseQuery: fakeBaseQuery(),
-  tagTypes: ['Products', 'Cart'],
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'http://localhost:5001/api',
+    credentials: 'include',
+    prepareHeaders: (headers) => {
+      headers.set('Content-Type', 'application/json')
+      return headers
+    },
+  }),
+  tagTypes: ['Products'],
   endpoints: (builder) => ({
-    getProducts: builder.query<Product[], void>({
-      queryFn: () => {
-        return { 
-          data: [] // Empty array since shop is coming soon
-        }
-      },
+    getProducts: builder.query<any[], void>({
+      query: () => '/products',
       providesTags: ['Products'],
-    }),
-    getProductById: builder.query<Product, string>({
-      queryFn: (id) => {
-        return { 
-          data: {
-            id,
-            name: 'Sample Product',
-            description: 'Coming soon...',
-            price: 0,
-            imageUrl: '',
-            category: 'clothing',
-            inStock: false,
-            tags: []
-          }
-        }
-      },
-      providesTags: (result, error, id) => [{ type: 'Products', id }],
     }),
   }),
 })
 
-export const {
-  useGetProductsQuery,
-  useGetProductByIdQuery,
-} = shopApi
+export const { useGetProductsQuery } = shopApi

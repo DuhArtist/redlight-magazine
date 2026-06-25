@@ -17,9 +17,11 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Relations
   articles Article[]
   roses    Rose[]
   orders   Order[]
+  cartItems CartItem[]
 
   @@map("users")
 }
@@ -40,7 +42,7 @@ model Article {
   date      DateTime
   category  String
   authorId  String
-  author    User     @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   featured  Boolean  @default(false)
   published Boolean  @default(false)
   views     Int      @default(0)
@@ -61,7 +63,7 @@ model Rose {
   category     RoseCategory
   featured     Boolean  @default(false)
   userId       String   @unique
-  user         User     @relation(fields: [userId], references: [id])
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   socialLinks  Json
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -88,22 +90,23 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  orders      Order[]
-  cartItems   CartItem[]
+  // Relations
+  orders     OrderItem[]  // NOT Order[] - this was the error
+  cartItems  CartItem[]
 
   @@map("products")
 }
 
 model Order {
-  id          String   @id @default(cuid())
+  id          String      @id @default(cuid())
   userId      String
-  user        User     @relation(fields: [userId], references: [id])
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   items       OrderItem[]
   total       Float
   status      OrderStatus @default(PENDING)
   shippingAddress Json
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
   @@map("orders")
 }
@@ -113,7 +116,7 @@ model OrderItem {
   orderId   String
   order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productId String
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity  Int
   price     Float
 
@@ -123,8 +126,9 @@ model OrderItem {
 model CartItem {
   id        String   @id @default(cuid())
   userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   productId String
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity  Int      @default(1)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

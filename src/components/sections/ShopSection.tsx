@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ProductCard } from '@/components/shared/Card'
+import { useGetProductsQuery } from '@/store/api/shopApi'
+
 
 interface Product {
   id: string
@@ -121,20 +123,21 @@ const ShopSection: React.FC = () => {
   useEffect(() => {
   const fetchProducts = async () => {
     try {
-      const response = await fetch('https://reemduhartist.com/wp-json/redlight/v1/products');
-      const data = await response.json();
-      setProducts(data);
-      setFilteredProducts(data);
+      // Use your local backend instead of external WP
+      const response = await fetch('http://localhost:5001/api/products')
+      const data = await response.json()
+      setProducts(data)
+      setFilteredProducts(data)
     } catch (error) {
-      console.error('Error fetching products:', error);
-      // Fallback to mock data if needed
-      setProducts(mockProducts);
-      setFilteredProducts(mockProducts);
+      console.error('Error fetching products:', error)
+      // Fallback to mock data
+      setProducts(mockProducts)
+      setFilteredProducts(mockProducts)
     }
-  };
+  }
   
-  fetchProducts();
-}, []);
+  fetchProducts()
+}, [])
 
   const handleFilter = (filterId: string) => {
     setActiveFilter(filterId)
@@ -244,7 +247,7 @@ const ShopSection: React.FC = () => {
           {filteredProducts.map((product) => (
             <ProductCard
               key={product.id}
-              image={product.image}
+              image={product.imageUrl}
               name={product.name}
               price={product.price}
               category={product.category}
@@ -286,7 +289,7 @@ const ShopSection: React.FC = () => {
                 {/* Product Images */}
                 <div>
                   <img
-                    src={selectedProduct.image}
+                    src={selectedProduct.imageUrl}
                     alt={selectedProduct.name}
                     className="w-full rounded-xl mb-4"
                   />

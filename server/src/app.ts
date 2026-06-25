@@ -3,16 +3,58 @@ import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import { config } from 'dotenv'
+import { v2 as cloudinary } from 'cloudinary'
+import multer from 'multer'
+import path from 'path'
+import fs from 'fs'
+import { PrismaClient } from '@prisma/client'
 
 // Load environment variables
 config()
 
 const app = express()
+const prisma = new PrismaClient()
 const PORT = process.env.PORT || 5000
 
-// CORS Configuration - ALLOW ALL ORIGINS FOR DEVELOPMENT
+// ===== CONFIGURE CLOUDINARY =====
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
+
+// ===== CONFIGURE MULTER (for file uploads) =====
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadDir = './uploads'
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true })
+    }
+    cb(null, uploadDir)
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
+  }
+})
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = /jpeg|jpg|png|gif|webp|mp4|mov|avi|mkv/
+    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase())
+    const mimetype = allowedTypes.test(file.mimetype)
+    if (extname && mimetype) {
+      return cb(null, true)
+    }
+    cb(new Error('Only images and videos are allowed'))
+  }
+})
+
+// CORS Configuration
 const corsOptions = {
-  origin: true, // Allow all origins in development
+  origin: true,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
@@ -20,338 +62,340 @@ const corsOptions = {
 }
 
 // Middleware
-app.use(cors(corsOptions)) // Apply CORS with options
+app.use(cors(corsOptions))
 app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" }, // Allow cross-origin resources
+  crossOriginResourcePolicy: { policy: "cross-origin" },
 }))
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
-// Handle preflight requests for all routes
 app.options('*', cors(corsOptions))
-
-// Serve static files from public directory
 app.use('/assets', express.static('public/assets'))
 
-// API Routes
+// ===== HEALTH CHECK =====
 app.get('/api/health', (req: Request, res: Response) => {
-  res.json({ 
-    status: 'OK', 
+  res.json({
+    status: 'OK',
     message: 'RedLight Magazine API is running',
     timestamp: new Date().toISOString()
   })
 })
 
-// Articles endpoints
-app.get('/api/articles/featured', (req: Request, res: Response) => {
-  const featuredArticles = [
-    {
-      id: '1',
-      title: 'Born is the RedLight Revolution',
-      excerpt: 'The beginning of a new era in creative expression',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      imageUrl: '/assets/images/articles/taleen-test.png',
-      date: 'December 1996',
-      category: 'featured',
-      author: 'RedLight Team',
-      featured: true,
-      published: true,
-      views: 2500,
-      tags: ['revolution', 'beginning', 'redlight']
+// ===== MEDIA UPLOAD ROUTES =====
+app.post('/api/media/upload', upload.single('media'), async (req: Request, res: Response) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' })
     }
-  ]
-  res.json(featuredArticles)
+
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'redlight-magazine',
+      resource_type: 'auto',
+      use_filename: true,
+      unique_filename: true,
+    })
+
+    if (fs.existsSync(req.file.path)) {
+      fs.unlinkSync(req.file.path)
+    }
+
+    res.json({
+      success: true,
+      data: {
+        url: result.secure_url,
+        publicId: result.public_id,
+        width: result.width,
+        height: result.height,
+        format: result.format,
+        bytes: result.bytes,
+      }
+    })
+  } catch (error) {
+    console.error('Upload error:', error)
+    res.status(500).json({ error: 'Upload failed' })
+  }
 })
 
-app.get('/api/articles/latest', (req: Request, res: Response) => {
-  const latestArticles = [
-    {
-      id: '1',
-      title: 'RedLight Saving Heauxs',
-      excerpt: 'The brand innovating adult entertainment and healing the Heauxs',
-      content: 'Full article content about innovation and healing...',
-      imageUrl: '/assets/images/articles/spreads/saving-heauxs-spread.png',
-      date: '2024-01-15',
-      category: 'news',
-      author: 'Admin',
-      featured: false,
-      published: true,
-      views: 1500,
-      tags: ['heauxs', 'innovation', 'healing']
-    },
-    {
-      id: '2',
-      title: "RedLight's Top Ten: Animated Baddies",
-      excerpt: 'RedLight showcases its top ten animated baddies in fiction',
-      content: 'Full article about animated characters...',
-      imageUrl: '/assets/images/articles/spreads/top-ten.png',
-      date: '2024-01-10',
-      category: 'entertainment',
-      author: 'Admin',
-      featured: false,
-      published: true,
-      views: 1800,
-      tags: ['animated', 'top-ten', 'entertainment']
-    },
-    {
-      id: '3',
-      title: 'Industry Experience: Holly Hendrix',
-      excerpt: 'An in-depth look at the industry experience',
-      content: 'Interview and insights from Holly Hendrix...',
-      imageUrl: '/assets/images/articles/spreads/holly.png',
-      date: '2024-01-05',
-      category: 'interview',
-      author: 'Admin',
-      featured: false,
-      published: true,
-      views: 2200,
-      tags: ['interview', 'industry', 'experience']
-    },
-  ]
-  res.json(latestArticles)
+app.delete('/api/media/:publicId', async (req: Request, res: Response) => {
+  try {
+    const { publicId } = req.params
+    const result = await cloudinary.uploader.destroy(publicId)
+    
+    if (result.result === 'ok') {
+      res.json({ success: true, message: 'Media deleted' })
+    } else {
+      res.status(404).json({ error: 'Media not found' })
+    }
+  } catch (error) {
+    console.error('Delete error:', error)
+    res.status(500).json({ error: 'Deletion failed' })
+  }
 })
 
-// Get all articles with filters
-app.get('/api/articles', (req: Request, res: Response) => {
-  const { category, search, page = '1', limit = '10', sortBy = 'date' } = req.query
-  
-  const articles = [
-    {
-      id: '1',
-      title: 'RedLight Saving Heauxs',
-      excerpt: 'The brand innovating adult entertainment and healing the Heauxs',
-      content: 'Full article content...',
-      imageUrl: '/assets/images/articles/spreads/saving-heauxs-spread.png',
-      date: '2024-01-15',
-      category: 'news',
-      author: 'Admin',
-      featured: false,
-      published: true,
-      views: 1500,
-      tags: ['heauxs', 'innovation', 'entertainment']
-    },
-    {
-      id: '2',
-      title: "RedLight's Top Ten: Animated Baddies",
-      excerpt: 'RedLight showcases its top ten animated baddies in fiction',
-      content: 'Full article content...',
-      imageUrl: '/assets/images/articles/spreads/top-ten.png',
-      date: '2024-01-10',
-      category: 'entertainment',
-      author: 'Admin',
-      featured: false,
-      published: true,
-      views: 1800,
-      tags: ['animated', 'top-ten', 'entertainment']
-    },
-    {
-      id: '3',
-      title: 'Industry Experience: Holly Hendrix',
-      excerpt: 'An in-depth look at the industry experience',
-      content: 'Full article content...',
-      imageUrl: '/assets/images/articles/spreads/holly.png',
-      date: '2024-01-05',
-      category: 'interview',
-      author: 'Admin',
-      featured: false,
-      published: true,
-      views: 2200,
-      tags: ['interview', 'industry', 'experience']
-    },
-  ]
-  
-  // Filter and paginate (mock implementation)
-  let filtered = [...articles]
-  
-  if (category && category !== 'all') {
-    filtered = filtered.filter(article => article.category === category)
+// ============================================
+// ===== ARTICLES ENDPOINTS (DATABASE) =====
+// ============================================
+
+// Get featured articles
+app.get('/api/articles/featured', async (req: Request, res: Response) => {
+  try {
+    const articles = await prisma.article.findMany({
+      where: { featured: true, published: true },
+      orderBy: { date: 'desc' },
+      take: 3,
+      include: {
+        author: {
+          select: { name: true }
+        }
+      }
+    })
+    res.json(articles)
+  } catch (error) {
+    console.error('Error fetching featured articles:', error)
+    res.status(500).json({ error: 'Failed to fetch featured articles' })
   }
-  
-  if (search) {
-    const searchLower = search.toString().toLowerCase()
-    filtered = filtered.filter(article => 
-      article.title.toLowerCase().includes(searchLower) ||
-      article.excerpt.toLowerCase().includes(searchLower)
-    )
+})
+
+// Get latest articles
+app.get('/api/articles/latest', async (req: Request, res: Response) => {
+  try {
+    const articles = await prisma.article.findMany({
+      where: { published: true },
+      orderBy: { date: 'desc' },
+      take: 6,
+      include: {
+        author: {
+          select: { name: true }
+        }
+      }
+    })
+    res.json(articles)
+  } catch (error) {
+    console.error('Error fetching latest articles:', error)
+    res.status(500).json({ error: 'Failed to fetch latest articles' })
   }
-  
-  const pageNum = parseInt(page.toString())
-  const limitNum = parseInt(limit.toString())
-  const startIndex = (pageNum - 1) * limitNum
-  const endIndex = startIndex + limitNum
-  
-  const paginated = filtered.slice(startIndex, endIndex)
-  
-  res.json({
-    success: true,
-    data: paginated,
-    pagination: {
-      page: pageNum,
-      limit: limitNum,
-      total: filtered.length,
-      pages: Math.ceil(filtered.length / limitNum)
+})
+
+// Get all articles with filters and pagination
+app.get('/api/articles', async (req: Request, res: Response) => {
+  try {
+    const { category, search, page = '1', limit = '10', sortBy = 'date' } = req.query
+    
+    const where: any = { published: true }
+    if (category && category !== 'all') {
+      where.category = category as string
     }
-  })
+    if (search) {
+      where.OR = [
+        { title: { contains: search as string, mode: 'insensitive' } },
+        { excerpt: { contains: search as string, mode: 'insensitive' } },
+      ]
+    }
+    
+    const pageNum = parseInt(page as string)
+    const limitNum = parseInt(limit as string)
+    const skip = (pageNum - 1) * limitNum
+    
+    const [articles, total] = await Promise.all([
+      prisma.article.findMany({
+        where,
+        orderBy: { date: 'desc' },
+        skip,
+        take: limitNum,
+        include: {
+          author: {
+            select: { name: true }
+          }
+        }
+      }),
+      prisma.article.count({ where })
+    ])
+    
+    res.json({
+      success: true,
+      data: articles,
+      pagination: {
+        page: pageNum,
+        limit: limitNum,
+        total,
+        pages: Math.ceil(total / limitNum)
+      }
+    })
+  } catch (error) {
+    console.error('Error fetching articles:', error)
+    res.status(500).json({ error: 'Failed to fetch articles' })
+  }
 })
 
 // Get article by ID
-app.get('/api/articles/:id', (req: Request, res: Response) => {
-  const { id } = req.params
-  
-  const article = {
-    id: id,
-    title: 'Sample Article',
-    excerpt: 'This is a sample article excerpt',
-    content: 'This is the full content of the article. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    imageUrl: '/assets/images/articles/taleen-test.png',
-    date: '2024-01-01',
-    category: 'news',
-    author: 'Admin',
-    featured: true,
-    published: true,
-    views: 1000,
-    tags: ['sample', 'test', 'article']
+app.get('/api/articles/:id', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+    const article = await prisma.article.findUnique({
+      where: { id },
+      include: {
+        author: {
+          select: { name: true }
+        }
+      }
+    })
+    
+    if (!article) {
+      return res.status(404).json({ error: 'Article not found' })
+    }
+    
+    res.json(article)
+  } catch (error) {
+    console.error('Error fetching article:', error)
+    res.status(500).json({ error: 'Failed to fetch article' })
   }
-  
-  res.json(article)
 })
 
-// Roses endpoints
-app.get('/api/roses/featured', (req: Request, res: Response) => {
-  const featuredRose = {
-    id: '1',
-    name: 'Kayla Amber',
-    stageName: 'Amber Dreams',
-    bio: 'Introducing the latest addition to our garden. Kayla Amber brings a unique perspective on creative expression and artistic freedom.',
-    imageUrl: '/assets/images/roses/featured/elexus-thumb-front.png',
-    gallery: [],
-    category: 'rose' as const,
-    featured: true,
-    socialLinks: {
-      instagram: 'https://instagram.com/kaylaamber',
-      twitter: 'https://twitter.com/kaylaamber'
-    }
+// ============================================
+// ===== ROSES ENDPOINTS (DATABASE) =====
+// ============================================
+
+// Get featured rose
+app.get('/api/roses/featured', async (req: Request, res: Response) => {
+  try {
+    const rose = await prisma.rose.findFirst({
+      where: { featured: true },
+      include: {
+        user: {
+          select: { name: true }
+        }
+      }
+    })
+    res.json(rose)
+  } catch (error) {
+    console.error('Error fetching featured rose:', error)
+    res.status(500).json({ error: 'Failed to fetch featured rose' })
   }
-  res.json(featuredRose)
 })
 
-app.get('/api/roses', (req: Request, res: Response) => {
-  const { category, search, page = '1', limit = '10' } = req.query
-  
-  const roses = [
-    {
-      id: '1',
-      name: 'Kayla Amber',
-      stageName: 'Amber Dreams',
-      bio: 'Introducing the latest addition to our garden...',
-      imageUrl: '/assets/images/roses/azaria-thumb.png',
-      gallery: [],
-      category: 'rose' as const,
-      featured: true,
-      socialLinks: {
-        instagram: 'https://instagram.com/kaylaamber',
-        twitter: 'https://twitter.com/kaylaamber'
-      }
-    },
-    {
-      id: '2',
-      name: 'Jasmine Chola',
-      stageName: 'Jazzy Chola',
-      bio: 'Creative artist and performer...',
-      imageUrl: '/assets/images/roses/teresa-thumb.png',
-      gallery: [],
-      category: 'rose' as const,
-      featured: false,
-      socialLinks: {
-        instagram: 'https://instagram.com/jasminechola'
-      }
-    },
-    {
-      id: '3',
-      name: 'Nudist Rose',
-      bio: 'Artist specializing in body positivity...',
-      imageUrl: '/assets/images/roses/ye-thumb.png',
-      gallery: [],
-      category: 'art' as const,
-      featured: false,
-      socialLinks: {}
-    },
-  ]
-  
-  // Filter (mock implementation)
-  let filtered = [...roses]
-  
-  if (category && category !== 'all') {
-    filtered = filtered.filter(rose => rose.category === category)
-  }
-  
-  if (search) {
-    const searchLower = search.toString().toLowerCase()
-    filtered = filtered.filter(rose => 
-      rose.name.toLowerCase().includes(searchLower) ||
-      (rose.stageName && rose.stageName.toLowerCase().includes(searchLower))
-    )
-  }
-  
-  const pageNum = parseInt(page.toString())
-  const limitNum = parseInt(limit.toString())
-  const startIndex = (pageNum - 1) * limitNum
-  const endIndex = startIndex + limitNum
-  
-  const paginated = filtered.slice(startIndex, endIndex)
-  
-  res.json({
-    success: true,
-    data: paginated,
-    pagination: {
-      page: pageNum,
-      limit: limitNum,
-      total: filtered.length,
-      pages: Math.ceil(filtered.length / limitNum)
+// Get all roses with filters and pagination
+app.get('/api/roses', async (req: Request, res: Response) => {
+  try {
+    const { category, search, page = '1', limit = '10' } = req.query
+    
+    const where: any = {}
+    if (category && category !== 'all') {
+      where.category = category as string
     }
-  })
+    if (search) {
+      where.OR = [
+        { name: { contains: search as string, mode: 'insensitive' } },
+        { stageName: { contains: search as string, mode: 'insensitive' } },
+      ]
+    }
+    
+    const pageNum = parseInt(page as string)
+    const limitNum = parseInt(limit as string)
+    const skip = (pageNum - 1) * limitNum
+    
+    const [roses, total] = await Promise.all([
+      prisma.rose.findMany({
+        where,
+        skip,
+        take: limitNum,
+        include: {
+          user: {
+            select: { name: true }
+          }
+        }
+      }),
+      prisma.rose.count({ where })
+    ])
+    
+    res.json({
+      success: true,
+      data: roses,
+      pagination: {
+        page: pageNum,
+        limit: limitNum,
+        total,
+        pages: Math.ceil(total / limitNum)
+      }
+    })
+  } catch (error) {
+    console.error('Error fetching roses:', error)
+    res.status(500).json({ error: 'Failed to fetch roses' })
+  }
 })
 
 // Get rose by ID
-app.get('/api/roses/:id', (req: Request, res: Response) => {
-  const { id } = req.params
-  
-  const rose = {
-    id: id,
-    name: 'Sample Rose',
-    stageName: 'Stage Name',
-    bio: 'This is a sample rose bio. Creative expression beyond skin.',
-    imageUrl: '/assets/images/roses/azaria-thumb.png',
-    gallery: [],
-    category: 'rose' as const,
-    featured: true,
-    socialLinks: {
-      instagram: 'https://instagram.com/sample',
-      twitter: 'https://twitter.com/sample'
+app.get('/api/roses/:id', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+    const rose = await prisma.rose.findUnique({
+      where: { id },
+      include: {
+        user: {
+          select: { name: true }
+        }
+      }
+    })
+    
+    if (!rose) {
+      return res.status(404).json({ error: 'Rose not found' })
     }
+    
+    res.json(rose)
+  } catch (error) {
+    console.error('Error fetching rose:', error)
+    res.status(500).json({ error: 'Failed to fetch rose' })
   }
-  
-  res.json(rose)
 })
 
-// Products endpoint
-app.get('/api/products', (req: Request, res: Response) => {
-  res.json([]) // Empty for now since shop is coming soon
+// ============================================
+// ===== PRODUCTS ENDPOINT (DATABASE) =====
+// ============================================
+
+app.get('/api/products', async (req: Request, res: Response) => {
+  try {
+    const products = await prisma.product.findMany({
+      where: { inStock: true }
+    })
+    res.json(products)
+  } catch (error) {
+    console.error('Error fetching products:', error)
+    res.status(500).json({ error: 'Failed to fetch products' })
+  }
 })
 
-// Newsletter endpoint
-app.post('/api/newsletter/subscribe', (req: Request, res: Response) => {
-  const { email } = req.body
-  console.log(`Newsletter subscription: ${email}`)
-  res.json({ 
-    success: true, 
-    message: 'Successfully subscribed to newsletter',
-    data: { email }
-  })
+// ============================================
+// ===== NEWSLETTER ENDPOINT (DATABASE) =====
+// ============================================
+
+app.post('/api/newsletter/subscribe', async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body
+    
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' })
+    }
+    
+    const subscriber = await prisma.newsletterSubscriber.upsert({
+      where: { email },
+      update: { active: true },
+      create: { email, active: true }
+    })
+    
+    res.json({
+      success: true,
+      message: 'Successfully subscribed to newsletter',
+      data: { email: subscriber.email }
+    })
+  } catch (error) {
+    console.error('Newsletter subscription error:', error)
+    res.status(500).json({ error: 'Failed to subscribe' })
+  }
 })
 
-// Error handling
+// ============================================
+// ===== ERROR HANDLING =====
+// ============================================
+
 app.use((req: Request, res: Response) => {
   res.status(404).json({ error: 'Route not found' })
 })
@@ -361,7 +405,10 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({ error: 'Something went wrong!' })
 })
 
-// Start server
+// ============================================
+// ===== START SERVER =====
+// ============================================
+
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`)

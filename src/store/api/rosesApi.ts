@@ -1,62 +1,61 @@
-import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Rose, ApiResponse } from '@/types'
 import { RoseFilters } from '@/types/api.types'
-import { mockRoses } from '@/utils/mockData'
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
 export const rosesApi = createApi({
   reducerPath: 'rosesApi',
-  baseQuery: fakeBaseQuery(),  // Use mock data
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'http://localhost:5001/api',
+    credentials: 'include',
+    prepareHeaders: (headers) => {
+      headers.set('Content-Type', 'application/json')
+      return headers
+    },
+  }),
   tagTypes: ['Roses'],
   endpoints: (builder) => ({
+    // Get featured rose
     getFeaturedRose: builder.query<Rose, void>({
-      queryFn: () => {
-        return { data: mockRoses.featured }
-      },
+      query: () => '/roses/featured',
       providesTags: ['Roses'],
     }),
+
+    // Get all roses with filters
     getRoses: builder.query<ApiResponse<Rose[]>, RoseFilters>({
-      queryFn: (params) => {
-        let filtered = [...mockRoses.list]
-        
-        // Apply filters
+      query: (params) => {
+        const queryParams = new URLSearchParams()
         if (params.category && params.category !== 'all') {
-          filtered = filtered.filter(rose => rose.category === params.category)
+          queryParams.append('category', params.category)
         }
-        
         if (params.search) {
-          const searchLower = params.search.toLowerCase()
-          filtered = filtered.filter(rose => 
-            rose.name.toLowerCase().includes(searchLower) ||
-            (rose.stageName && rose.stageName.toLowerCase().includes(searchLower))
-          )
+          queryParams.append('search', params.search)
+        }
+        if (params.page) {
+          queryParams.append('page', params.page.toString())
+        }
+        if (params.limit) {
+          queryParams.append('limit', params.limit.toString())
         }
         
-        // Pagination
-        const page = params.page || 1
-        const limit = params.limit || 10
-        const startIndex = (page - 1) * limit
-        const endIndex = startIndex + limit
-        
-        return { 
-          data: {
-            success: true,
-            data: filtered.slice(startIndex, endIndex),
-            pagination: {
-              page,
-              limit,
-              total: filtered.length,
-              pages: Math.ceil(filtered.length / limit)
-            }
-          }
+        const queryString = queryParams.toString()
+        return {
+          url: `/roses${queryString ? `?${queryString}` : ''}`,
         }
       },
-      providesTags: ['Roses'],
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.data.map(({ id }) => ({ type: 'Roses' as const, id })),
+              { type: 'Roses', id: 'LIST' },
+            ]
+          : [{ type: 'Roses', id: 'LIST' }],
     }),
+
+    // Get single rose by ID
     getRoseById: builder.query<Rose, string>({
-      queryFn: (id) => {
-        const rose = mockRoses.list.find(r => r.id === id) || mockRoses.featured
-        return { data: rose }
-      },
+      query: (id) => `/roses/${id}`,
       providesTags: (result, error, id) => [{ type: 'Roses', id }],
     }),
   }),
