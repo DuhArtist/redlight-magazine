@@ -37,14 +37,6 @@ const HeroSection: React.FC = () => {
       {/* Left Column: RedLight Definition Sidebar */}
       <div className="lg:w-1/4 bg-white text-black p-8 lg:p-12 flex flex-col justify-between hidden lg:block">
         <div>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-5xl font-playfair font-bold mb-4"
-          >
-            red·light
-          </motion.h1>
 
           <motion.div
             initial={{ opacity: 0 }}
@@ -53,8 +45,8 @@ const HeroSection: React.FC = () => {
             className="space-y-4"
           >
             <img 
-            src="https://res.cloudinary.com/xamspc0g/image/upload/v1782412714/redlight-beyond-skin-logo_atqkdj.png" 
-            alt="RedLight Beyond Skin"
+            src="https://res.cloudinary.com/xamspc0g/image/upload/v1782415164/Official_Logo_fcvuby.png" 
+            alt="RedLight Beyond Skin logo"
             className="h-36 mx-auto mb-8 opacity-90"
           />
             <div className="text-gray-800 space-y-4">
