@@ -32,7 +32,7 @@ const RoseGardenSection: React.FC = () => {
       featuredTitle: "Become the first",
       gridTitle: "Roses Concepts",
       moreText: "More roses",
-      featuredItem: featuredRose || { name: "RedLight Rose", imageUrl: "/assets/images/roses/featured/elexus-thumb-front.png", bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+      featuredItem: featuredRose || { name: "RedLight Rose", imageUrl: "https://res.cloudinary.com/xamspc0g/image/upload/v1782408877/elexus-thumb-front_b5hjgn.png", bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
     },
     art: {
       featuredTitle: "Featured Art Piece",

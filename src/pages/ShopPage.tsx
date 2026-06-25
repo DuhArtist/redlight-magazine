@@ -41,7 +41,7 @@ const ShopPage: React.FC = () => {
             className="max-w-4xl mx-auto text-center"
           >
             <img 
-              src="/assets/images/anatomy/redlight-neon-logo.png"
+              src="https://res.cloudinary.com/xamspc0g/image/upload/v1782413710/redlight-neon-logo_uwt6wm.png"
               alt="Coming Soon"
               className="h-40 mx-auto mb-8 animate-pulse"
             />

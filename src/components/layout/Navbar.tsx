@@ -85,7 +85,7 @@ const Navbar: React.FC = () => {
               >
                 <div className="w-8 h-8 opacity-80 hover:opacity-100 hover:scale-110 transition-all duration-300">
                   <img 
-                    src="/assets/images/anatomy/redlight-neon-logo.png"
+                    src="https://res.cloudinary.com/xamspc0g/image/upload/v1782413710/redlight-neon-logo_uwt6wm.png"
                     alt="Home"
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                     title="Home"
@@ -185,7 +185,7 @@ const Navbar: React.FC = () => {
                     >
                       <div className="w-8 h-8 rounded-full overflow-hidden">
                         <img 
-                          src="/assets/images/anatomy/redlight-neon-logo.png"
+                          src="https://res.cloudinary.com/xamspc0g/image/upload/v1782413710/redlight-neon-logo_uwt6wm.png"
                           alt="Home"
                           className="w-full h-full object-cover"
                         />
