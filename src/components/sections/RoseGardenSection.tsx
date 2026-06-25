@@ -62,7 +62,7 @@ const RoseGardenSection: React.FC = () => {
           <motion.img 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            src="/assets/images/anatomy/rose-garden-logo.png"
+            src="https://res.cloudinary.com/xamspc0g/image/upload/v1782412714/redlight-beyond-skin-logo_atqkdj.png"
             alt="RedLight Rose Garden Logo"
             className="h-24 mx-auto mb-4"
           />

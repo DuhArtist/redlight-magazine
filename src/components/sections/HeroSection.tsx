@@ -12,19 +12,19 @@ const HeroSection: React.FC = () => {
 
   const slides = [
     {
-      image: '/assets/images/slider/magazine.png',
+      image: 'https://res.cloudinary.com/xamspc0g/image/upload/v1782408905/magazine_iwykkk.png',
       alt: 'Elexus Jionde Magazine Concept',
       title: 'Elexus Jionde Magazine Concept',
       caption: 'A visual exploration of artistic expression'
     },
     {
-      image: '/assets/images/slider/pussypop.png',
-      alt: 'Pussy Pop Concept',
-      title: 'Pussy Pop Concept',
-      caption: 'Bold statements in contemporary art'
+      image: 'https://res.cloudinary.com/xamspc0g/image/upload/v1782408905/pussypop_kptqzb.png',
+      alt: 'Holly Hendrix Experience',
+      title: 'Holly Hendrix Experience',
+      caption: 'Holly recaps a traumatic experience from the industry'
     },
     {
-      image: '/assets/images/slider/ebonee.png',
+      image: 'https://res.cloudinary.com/xamspc0g/image/upload/v1782408906/ebonee_ivsvcb.png',
       alt: 'Ebonee Magazine Concept',
       title: 'Ebonee Magazine Concept',
       caption: 'Redefining creative boundaries'

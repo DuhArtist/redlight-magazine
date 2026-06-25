@@ -13,7 +13,7 @@ const AboutSection: React.FC = () => {
           className="text-center mb-12"
         >
           <img 
-            src="/assets/images/anatomy/redlight-beyond-skin-logo.png" 
+            src="https://res.cloudinary.com/xamspc0g/image/upload/v1782412714/redlight-beyond-skin-logo_atqkdj.png" 
             alt="RedLight Beyond Skin"
             className="h-36 mx-auto mb-8 opacity-90"
           />
