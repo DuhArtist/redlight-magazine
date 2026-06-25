@@ -52,9 +52,11 @@ const HeroSection: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="space-y-4"
           >
-            <h2 className="text-xl font-roboto font-semibold text-gray-700">
-              [ˌred ˈlīt] noun
-            </h2>
+            <img 
+            src="https://res.cloudinary.com/xamspc0g/image/upload/v1782412714/redlight-beyond-skin-logo_atqkdj.png" 
+            alt="RedLight Beyond Skin"
+            className="h-36 mx-auto mb-8 opacity-90"
+          />
             <div className="text-gray-800 space-y-4">
               <div className="pt-4 border-t border-gray-200">
                 <p className="text-gray-700 text-l mb-2">
