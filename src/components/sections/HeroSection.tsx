@@ -47,12 +47,12 @@ const HeroSection: React.FC = () => {
             <img 
             src="https://res.cloudinary.com/xamspc0g/image/upload/v1782415164/Official_Logo_fcvuby.png" 
             alt="RedLight Beyond Skin logo"
-            className="h-36 mx-auto mb-8 opacity-90"
+            className="h-86 mx-auto mb-4 opacity-90"
           />
             <div className="text-gray-800 space-y-4">
               <div className="pt-4 border-t border-gray-200">
                 <p className="text-gray-700 text-l mb-2">
-                  Articles, artwork, and creative services for adult entertainers and service providers <br/> — beyond skin.
+                  Creative media and services for adult entertainers and providers <br/> — beyond skin.
                 </p>
               </div>
             </div>
