@@ -2,8 +2,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Article, ApiResponse } from '@/types'
 import { ArticleFilters } from '@/types/api.types'
 
-// Get the base URL from environment variables
-const _API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
+// API_BASE_URL is not used directly here since we're using the baseUrl below
+// We'll keep it commented to avoid unused variable errors
+// const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
 export const articlesApi = createApi({
   reducerPath: 'articlesApi',
@@ -29,7 +30,7 @@ export const articlesApi = createApi({
     }),
     getArticleById: builder.query<Article, string>({
       query: (id) => `/articles/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Articles', id }],
+      providesTags: (_result, _error, id) => [{ type: 'Articles', id }],
     }),
     getArticles: builder.query<ApiResponse<Article[]>, ArticleFilters>({
       query: (params) => {
@@ -39,12 +40,16 @@ export const articlesApi = createApi({
         if (params.page) queryParams.append('page', params.page.toString())
         if (params.limit) queryParams.append('limit', params.limit.toString())
         if (params.sortBy) queryParams.append('sortBy', params.sortBy)
+        if (params.tags && params.tags.length > 0) {
+          params.tags.forEach(tag => queryParams.append('tags', tag))
+        }
         
         return {
           url: `/articles?${queryParams.toString()}`,
         }
       },
       providesTags: ['Articles'],
+      transformResponse: (response: ApiResponse<Article[]>) => response,
     }),
   }),
 })

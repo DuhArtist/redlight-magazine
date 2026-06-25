@@ -1,5 +1,6 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'  // Removed unused imports
+// Remove useWatch and useFieldArray - they're not being used
+import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Save, X } from 'lucide-react'
@@ -41,8 +42,7 @@ const ArticleForm: React.FC<ArticleFormProps> = ({
     }
   })
 
-  // ✅ THIS WAS MISSING - watches the tags array
-  const tags = watch('tags')
+  const tags = watch('tags') || [] // Ensure tags is always an array
 
   const [tagInput, setTagInput] = React.useState('')
 
@@ -62,7 +62,7 @@ const ArticleForm: React.FC<ArticleFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {/* ... rest of your JSX remains the same ... */}
+      {/* ... rest of your JSX ... */}
     </form>
   )
 }

@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useGetArticlesQuery } from '@/store/api/articlesApi'
-import Card from '@/components/shared/Card'
-import { Search, Filter, Calendar, User, Tag } from 'lucide-react'
+import { Search, Calendar, User, Tag } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const ReadsPage: React.FC = () => {
@@ -47,6 +46,21 @@ const ReadsPage: React.FC = () => {
         ? prev.filter(t => t !== tag)
         : [...prev, tag]
     )
+  }
+
+  // Helper function to safely render date
+  const renderDate = (date: string | Date | undefined) => {
+    if (!date) return 'Date unavailable'
+    if (date instanceof Date) return date.toLocaleDateString()
+    return String(date)
+  }
+
+  // Helper function to safely render author
+  const renderAuthor = (author: string | { name: string } | undefined) => {
+    if (!author) return 'Unknown author'
+    if (typeof author === 'string') return author
+    if (typeof author === 'object' && author.name) return author.name
+    return 'Unknown author'
   }
 
   return (
@@ -202,11 +216,11 @@ const ReadsPage: React.FC = () => {
                           <div className="flex items-center gap-4 text-xs text-gray-500 mb-3">
                             <span className="flex items-center gap-1">
                               <Calendar className="w-3 h-3" />
-                              {article.date?.toLocaleDateString() || article.date}
+                              {renderDate(article.date)}
                             </span>
                             <span className="flex items-center gap-1">
                               <User className="w-3 h-3" />
-                              {article.author}
+                              {renderAuthor(article.author)}
                             </span>
                           </div>
                           <h3 className="text-lg font-playfair font-bold mb-3 line-clamp-2 text-gray-900">
@@ -252,7 +266,7 @@ const ReadsPage: React.FC = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .floating-card {
           width: 100%;
           padding: 1.5rem;

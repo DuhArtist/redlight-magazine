@@ -10,12 +10,12 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  // Use _ prefix for unused variable
   const _isLoading = useSelector((state: RootState) => state.ui.isLoading)
 
   return (
     <div className="min-h-screen flex flex-col bg-dark-bg">
       <main className="flex-grow">
-        {/* Remove the AnimatePresence loading logic */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -24,7 +24,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           {children}
         </motion.div>
       </main>
-            <Navbar />
+      <Navbar />
       <Footer />
     </div>
   )

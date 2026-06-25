@@ -9,13 +9,13 @@ export interface ArticleFilters extends Partial<PaginationParams> {
   category?: string
   featured?: boolean
   search?: string
-  sortBy?: string
   tags?: string[]
 }
 
-export interface RoseFilters extends PaginationParams {
+export interface RoseFilters extends Partial<PaginationParams> {
   category?: 'rose' | 'art' | 'collab'
   featured?: boolean
+  search?: string // Add this!
 }
 
 export interface ApiError {

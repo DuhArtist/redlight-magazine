@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { ApiResponse } from '@/types'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
+// API_BASE_URL is not used directly here since we're using the baseUrl below
+// const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
 export const newsletterApi = createApi({
   reducerPath: 'newsletterApi',
@@ -13,15 +13,18 @@ export const newsletterApi = createApi({
       return headers
     },
   }),
+  tagTypes: ['Newsletter'],
   endpoints: (builder) => ({
-    subscribe: builder.mutation<{ success: boolean; message: string }, { email: string }>({
-      query: (data) => ({
+    subscribe: builder.mutation<{ message: string }, { email: string }>({
+      query: (body) => ({
         url: '/newsletter/subscribe',
         method: 'POST',
-        body: data,
+        body,
       }),
+      invalidatesTags: ['Newsletter'],
     }),
   }),
 })
 
-export const { useSubscribeToNewsletterMutation } = newsletterApi
+// Export the mutation hook with the desired name
+export const { useSubscribeMutation: useSubscribeToNewsletterMutation } = newsletterApi

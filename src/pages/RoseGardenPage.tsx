@@ -7,43 +7,37 @@ import { Link } from 'react-router-dom'
 const RoseGardenPage: React.FC = () => {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState<'rose' | 'art' | 'collab'>('rose')
+  
   const { data: rosesData, isLoading } = useGetRosesQuery({
     page: 1,
     limit: 12,
     search,
-    category: category !== 'roses' ? category : undefined,
+    category: category !== 'rose' ? category : undefined,
   })
 
   const roses = rosesData?.data || []
 
   const categories = [
-    { id: 'roses', label: 'Roses' },
-    { id: 'artwork', label: 'Artwork' },
-    { id: 'art', label: 'Design' },
-    { id: 'collabs', label: 'Collabs' },
+    { id: 'rose' as const, label: 'Roses' },
+    { id: 'art' as const, label: 'Artwork' },
+    { id: 'collab' as const, label: 'Collabs' },
   ]
 
   // Mock data for different categories
   const categoryContent = {
-    roses: {
+    rose: {
       title: 'Our Roses',
       description: 'Meet the creative spirits that bloom in the RedLight Garden.',
       emptyMessage: 'No roses found. Check back soon for new additions.',
       placeholder: 'Search roses...'
     },
-    artwork: {
+    art: {
       title: 'Artwork Collection',
       description: 'Curated art pieces from RedLight artists and collaborators.',
       emptyMessage: 'No artwork available. New pieces coming soon.',
       placeholder: 'Search artwork...'
     },
-    design: {
-      title: 'Design Works',
-      description: 'Graphic designs, layouts, and creative visual works.',
-      emptyMessage: 'No design works available. Check back for updates.',
-      placeholder: 'Search designs...'
-    },
-    collabs: {
+    collab: {
       title: 'Collaborations',
       description: 'Special projects and partnerships with creative minds.',
       emptyMessage: 'No collaborations at the moment. New projects coming soon.',
@@ -101,7 +95,7 @@ const RoseGardenPage: React.FC = () => {
               {categories.map((cat) => (
                 <button
                   key={cat.id}
-                  onClick={() => setCategory(cat.id as any)}
+                  onClick={() => setCategory(cat.id)}
                   className={`px-4 py-2 rounded-full border transition-colors ${
                     category === cat.id
                       ? 'bg-redlight-red text-white border-redlight-red'
@@ -168,7 +162,7 @@ const RoseGardenPage: React.FC = () => {
                           </span>
 
                           {/* Social Links (only for Roses category) */}
-                          {category === 'roses' && rose.socialLinks && (
+                          {category === 'rose' && rose.socialLinks && (
                             <div className="flex items-center justify-center gap-3 mt-4">
                               {rose.socialLinks.instagram && (
                                 <a 
@@ -255,6 +249,13 @@ const RoseGardenPage: React.FC = () => {
           transform: translateY(-8px);
           box-shadow: 0 15px 30px rgba(0,0,0,0.2);
           border-color: #dc143c;
+        }
+
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       `}</style>
     </div>

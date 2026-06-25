@@ -1,182 +1,178 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useGetFeaturedArticlesQuery, useGetLatestArticlesQuery } from '@/store/api/articlesApi'
-import Card from '@/components/shared/Card'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, Calendar, User } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const MagazineSection: React.FC = () => {
-  const { data: featuredArticles = [] } = useGetFeaturedArticlesQuery()
-  const { data: latestArticles = [] } = useGetLatestArticlesQuery()
+  const { data: featuredArticles } = useGetFeaturedArticlesQuery()
+  const { data: latestArticles } = useGetLatestArticlesQuery()
+
+  const featured = featuredArticles || []
+  const latest = latestArticles || []
+
+  // Helper function to safely render date
+  const renderDate = (date: string | Date | undefined) => {
+    if (!date) return 'Date unavailable'
+    if (date instanceof Date) return date.toLocaleDateString()
+    return String(date)
+  }
+
+  // Helper function to safely render author
+  const renderAuthor = (author: string | { name: string } | undefined) => {
+    if (!author) return 'Unknown author'
+    if (typeof author === 'string') return author
+    if (typeof author === 'object' && author.name) return author.name
+    return 'Unknown author'
+  }
 
   return (
-    <section className="section-padding bg-white text-black">
-      {/* Featured Issues Header */}
-        <div className="text-left mb-12">
+    <section className="section-padding bg-white relative overflow-hidden">
+      <div className="container-narrow relative z-10">
+        {/* Header */}
+        <div className="text-center mb-12">
           <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl font-playfair md:text-2xl font-bold mb-1"
+            className="text-4xl md:text-5xl font-playfair font-bold text-gray-900 mb-4"
           >
-            RedLight Mini-Mags
+            RedLight Reads
           </motion.h2>
-          <p className="text-gray-600">personalized magazines highlighting creatives.</p>
-        </div>
-      <div className="container-narrow">
-
-        {/* Floating Card (Replica of vanilla floating-card) */}
-        {featuredArticles.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="w-full mx-auto mb-16 grid md:grid-cols-3"
+            className="text-xl text-gray-600 max-w-2xl mx-auto"
           >
-            <div className="floating-card border border-gray-300">
-              <Link to={`/article/${featuredArticles[0].id}`} className="block">
-                <img 
-                  src={featuredArticles[0].imageUrl} 
-                  alt={featuredArticles[0].title}
-                  className="w-full h-auto rounded-md transition-transform duration-500 group-hover:scale-105 aspect-[3/4] object-cover "
-                />
-                <div className="p-6">
-                  <h3 className="text-2xl font-playfair font-bold mb-2 text-black">
-                    Taleen - Issue One
-                  </h3>
-                  <p className="text-gray-600">
-                    Discover the Palestinian songwriter and siren.
-                  </p>
-                </div>
-              </Link>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Divider with Show More */}
-        <div className="relative my-12">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-300"></div>
-          </div>
-          <div className="relative flex justify-center">
-            <button className="px-8 py-2 bg-gray-100 text-gray-800 rounded-full border border-gray-300 hover:bg-gray-200 transition-colors flex items-center gap-2">
-              Show more
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
+            Stories, interviews, and creative expressions beyond skin.
+          </motion.p>
         </div>
 
         {/* Featured Article */}
-        {featuredArticles.length > 0 && (
-          <Link 
-            to={`/article/${featuredArticles[0].id}`}
-            className="block bg-black text-white rounded-2xl overflow-hidden mb-16"
+        {featured.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="mb-16"
           >
-            <div className="grid md:grid-cols-2">
-              <div className="p-8 md:p-12 flex flex-col justify-center">
-                <p className="text-gray-400 italic mb-2">{featuredArticles[0].date}</p>
-                <h3 className="text-3xl md:text-4xl font-playfair font-bold mb-4">
-                  {featuredArticles[0].title}
-                </h3>
-                <p className="text-gray-300 mb-6 line-clamp-3">
-                  {featuredArticles[0].excerpt}
-                </p>
-                <span className="inline-block border border-gray-400 text-white px-6 py-2 rounded-lg hover:bg-white hover:text-black transition-colors">
-                  Read Article
-                </span>
+            <Link to={`/article/${featured[0].id}`} className="block group">
+              <div className="grid md:grid-cols-2 gap-8 bg-gradient-to-r from-gray-900 to-black rounded-2xl overflow-hidden shadow-2xl">
+                <div className="p-8 md:p-12 flex flex-col justify-center">
+                  <span className="text-redlight-red text-sm font-semibold uppercase tracking-wider mb-2">
+                    Featured Article
+                  </span>
+                  <h3 className="text-3xl md:text-4xl font-playfair font-bold text-white mb-4 group-hover:text-redlight-red transition-colors">
+                    {featured[0].title}
+                  </h3>
+                  <p className="text-gray-300 mb-6">
+                    {featured[0].excerpt}
+                  </p>
+                  <div className="flex items-center gap-6 text-sm text-gray-400">
+                    <span className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      {renderDate(featured[0].date)}
+                    </span>
+                    <span className="flex items-center gap-2">
+                      <User className="w-4 h-4" />
+                      {renderAuthor(featured[0].author)}
+                    </span>
+                  </div>
+                  <div className="mt-6">
+                    <span className="inline-flex items-center gap-2 text-redlight-red font-semibold group-hover:gap-4 transition-all">
+                      Read Article
+                      <ChevronRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                </div>
+                <div className="relative h-64 md:h-auto">
+                  <img 
+                    src={featured[0].imageUrl} 
+                    alt={featured[0].title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-l from-gray-900/50 via-transparent to-transparent" />
+                </div>
               </div>
-              <div>
-                <img 
-                  src={featuredArticles[0].imageUrl} 
-                  alt={featuredArticles[0].title}
-                  className="w-full h-full object-cover min-h-64"
-                />
-              </div>
-            </div>
-          </Link>
+            </Link>
+          </motion.div>
         )}
 
-        {/* Latest Articles Header */}
-        <div className="text-center mb-6">
-          <h3 className="text-2xl font-playfair font-bold mb-.6">Newest Stories</h3>
-          <p className="text-gray-600">learn, connect, or be entertained.</p>
-        </div>
-
-        {/* Latest Articles Grid with article-card styles */}
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {latestArticles.slice(0, 3).map((article, index) => (
-            <motion.div
-              key={article.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="group"
+        {/* Latest Articles Grid */}
+        <div className="mb-12">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-2xl font-playfair font-bold text-gray-900">
+              Latest Reads
+            </h3>
+            <Link 
+              to="/reads" 
+              className="text-redlight-red hover:text-red-700 font-semibold flex items-center gap-2"
             >
-              <div className="article-card border border-gray-300 h-full">
-                <Link to={`/article/${article.id}`} className="block h-full">
-                  <div className="p-4">
-                    <img 
-                      src={article.imageUrl} 
-                      alt={article.title}
-                      className="w-full h-64 object-cover rounded-lg mb-4 transition-transform duration-300 group-hover:scale-[0.97]"
-                    />
-                    <h4 className="font-playfair font-bold text-xl mb-2 line-clamp-2">
-                      {article.title}
-                    </h4>
-                    <p className="text-gray-600 text-sm line-clamp-3">
-                      {article.excerpt}
-                    </p>
+              View All
+              <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {latest.slice(0, 3).map((article, index) => (
+              <motion.div
+                key={article.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Link to={`/article/${article.id}`} className="block group">
+                  <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-gray-100 h-full">
+                    <div className="overflow-hidden">
+                      <img 
+                        src={article.imageUrl} 
+                        alt={article.title}
+                        className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <div className="flex items-center gap-4 text-xs text-gray-500 mb-3">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          {renderDate(article.date)}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <User className="w-3 h-3" />
+                          {renderAuthor(article.author)}
+                        </span>
+                      </div>
+                      <h4 className="text-lg font-playfair font-bold text-gray-900 mb-2 group-hover:text-redlight-red transition-colors line-clamp-2">
+                        {article.title}
+                      </h4>
+                      <p className="text-gray-600 text-sm line-clamp-2">
+                        {article.excerpt}
+                      </p>
+                      {article.category && (
+                        <span className="inline-block mt-3 px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                          {article.category}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </Link>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* More Articles Button */}
-        <div className="text-center">
-          <Link 
-            to="/magazine"
-            className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-50 transition-colors"
-          >
-            More reads
-            <ChevronRight className="w-4 h-4" />
-          </Link>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
 
-      <style jsx>{`
-        .floating-card {
-          width: 100%;
-          max-width: 320px;
-          margin: 2rem auto;
-          padding: 1.5rem;
-          background-color: rgba(255, 255, 255, 0.05);
-          border-radius: 0.6rem;
-          text-align: center;
-          box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-          transition: transform 0.5s ease, box-shadow 0.5s ease;
-          backdrop-filter: blur(8px);
-          will-change: transform, box-shadow;
-        }
-
-        .floating-card:hover {
-          transform: translateY(-10px);
-          box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-        }
-
-        .article-card {
-          border-radius: 12px;
+      <style>{`
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
           overflow: hidden;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-          text-align: center;
-          padding-top: 0;
-          background-color: #fff;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-
-        .article-card:hover {
-          transform: translateY(-10px);
-          box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        .line-clamp-3 {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       `}</style>
     </section>

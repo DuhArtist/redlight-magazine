@@ -1,4 +1,3 @@
-import React from 'react'
 import { motion } from 'framer-motion'
 import HeroSection from '@/components/sections/HeroSection'
 import MagazineSection from '@/components/sections/MagazineSection'
