@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "CommonJS",
+    "moduleResolution": "Node",
     "lib": ["ES2020"],
     "outDir": "../dist/server",
     "rootDir": "./src",
@@ -10,23 +11,11 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node",
     "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
+    "declarationMap": true,
     "sourceMap": true,
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "../dist"]
 }
