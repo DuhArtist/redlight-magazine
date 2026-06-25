@@ -23,7 +23,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 })
 
-// ===== CONFIGURE MULTER (for file uploads) =====
+// ===== CONFIGURE MULTER =====
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadDir = './uploads'
@@ -74,7 +74,7 @@ app.use('/assets', express.static('public/assets'))
 
 // ===== HEALTH CHECK =====
 app.get('/api/health', (req: Request, res: Response) => {
-  res.json({
+  return res.json({
     status: 'OK',
     message: 'RedLight Magazine API is running',
     timestamp: new Date().toISOString()
@@ -99,7 +99,7 @@ app.post('/api/media/upload', upload.single('media'), async (req: Request, res: 
       fs.unlinkSync(req.file.path)
     }
 
-    res.json({
+    return res.json({
       success: true,
       data: {
         url: result.secure_url,
@@ -112,7 +112,7 @@ app.post('/api/media/upload', upload.single('media'), async (req: Request, res: 
     })
   } catch (error) {
     console.error('Upload error:', error)
-    res.status(500).json({ error: 'Upload failed' })
+    return res.status(500).json({ error: 'Upload failed' })
   }
 })
 
@@ -122,21 +122,17 @@ app.delete('/api/media/:publicId', async (req: Request, res: Response) => {
     const result = await cloudinary.uploader.destroy(publicId)
     
     if (result.result === 'ok') {
-      res.json({ success: true, message: 'Media deleted' })
+      return res.json({ success: true, message: 'Media deleted' })
     } else {
-      res.status(404).json({ error: 'Media not found' })
+      return res.status(404).json({ error: 'Media not found' })
     }
   } catch (error) {
     console.error('Delete error:', error)
-    res.status(500).json({ error: 'Deletion failed' })
+    return res.status(500).json({ error: 'Deletion failed' })
   }
 })
 
-// ============================================
-// ===== ARTICLES ENDPOINTS (DATABASE) =====
-// ============================================
-
-// Get featured articles
+// ===== ARTICLES ENDPOINTS =====
 app.get('/api/articles/featured', async (req: Request, res: Response) => {
   try {
     const articles = await prisma.article.findMany({
@@ -149,14 +145,13 @@ app.get('/api/articles/featured', async (req: Request, res: Response) => {
         }
       }
     })
-    res.json(articles)
+    return res.json(articles)
   } catch (error) {
     console.error('Error fetching featured articles:', error)
-    res.status(500).json({ error: 'Failed to fetch featured articles' })
+    return res.status(500).json({ error: 'Failed to fetch featured articles' })
   }
 })
 
-// Get latest articles
 app.get('/api/articles/latest', async (req: Request, res: Response) => {
   try {
     const articles = await prisma.article.findMany({
@@ -169,14 +164,13 @@ app.get('/api/articles/latest', async (req: Request, res: Response) => {
         }
       }
     })
-    res.json(articles)
+    return res.json(articles)
   } catch (error) {
     console.error('Error fetching latest articles:', error)
-    res.status(500).json({ error: 'Failed to fetch latest articles' })
+    return res.status(500).json({ error: 'Failed to fetch latest articles' })
   }
 })
 
-// Get all articles with filters and pagination
 app.get('/api/articles', async (req: Request, res: Response) => {
   try {
     const { category, search, page = '1', limit = '10', sortBy = 'date' } = req.query
@@ -211,7 +205,7 @@ app.get('/api/articles', async (req: Request, res: Response) => {
       prisma.article.count({ where })
     ])
     
-    res.json({
+    return res.json({
       success: true,
       data: articles,
       pagination: {
@@ -223,11 +217,10 @@ app.get('/api/articles', async (req: Request, res: Response) => {
     })
   } catch (error) {
     console.error('Error fetching articles:', error)
-    res.status(500).json({ error: 'Failed to fetch articles' })
+    return res.status(500).json({ error: 'Failed to fetch articles' })
   }
 })
 
-// Get article by ID
 app.get('/api/articles/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params
@@ -244,18 +237,14 @@ app.get('/api/articles/:id', async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Article not found' })
     }
     
-    res.json(article)
+    return res.json(article)
   } catch (error) {
     console.error('Error fetching article:', error)
-    res.status(500).json({ error: 'Failed to fetch article' })
+    return res.status(500).json({ error: 'Failed to fetch article' })
   }
 })
 
-// ============================================
-// ===== ROSES ENDPOINTS (DATABASE) =====
-// ============================================
-
-// Get featured rose
+// ===== ROSES ENDPOINTS =====
 app.get('/api/roses/featured', async (req: Request, res: Response) => {
   try {
     const rose = await prisma.rose.findFirst({
@@ -266,14 +255,13 @@ app.get('/api/roses/featured', async (req: Request, res: Response) => {
         }
       }
     })
-    res.json(rose)
+    return res.json(rose)
   } catch (error) {
     console.error('Error fetching featured rose:', error)
-    res.status(500).json({ error: 'Failed to fetch featured rose' })
+    return res.status(500).json({ error: 'Failed to fetch featured rose' })
   }
 })
 
-// Get all roses with filters and pagination
 app.get('/api/roses', async (req: Request, res: Response) => {
   try {
     const { category, search, page = '1', limit = '10' } = req.query
@@ -307,7 +295,7 @@ app.get('/api/roses', async (req: Request, res: Response) => {
       prisma.rose.count({ where })
     ])
     
-    res.json({
+    return res.json({
       success: true,
       data: roses,
       pagination: {
@@ -319,11 +307,10 @@ app.get('/api/roses', async (req: Request, res: Response) => {
     })
   } catch (error) {
     console.error('Error fetching roses:', error)
-    res.status(500).json({ error: 'Failed to fetch roses' })
+    return res.status(500).json({ error: 'Failed to fetch roses' })
   }
 })
 
-// Get rose by ID
 app.get('/api/roses/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params
@@ -340,33 +327,27 @@ app.get('/api/roses/:id', async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Rose not found' })
     }
     
-    res.json(rose)
+    return res.json(rose)
   } catch (error) {
     console.error('Error fetching rose:', error)
-    res.status(500).json({ error: 'Failed to fetch rose' })
+    return res.status(500).json({ error: 'Failed to fetch rose' })
   }
 })
 
-// ============================================
-// ===== PRODUCTS ENDPOINT (DATABASE) =====
-// ============================================
-
+// ===== PRODUCTS ENDPOINT =====
 app.get('/api/products', async (req: Request, res: Response) => {
   try {
     const products = await prisma.product.findMany({
       where: { inStock: true }
     })
-    res.json(products)
+    return res.json(products)
   } catch (error) {
     console.error('Error fetching products:', error)
-    res.status(500).json({ error: 'Failed to fetch products' })
+    return res.status(500).json({ error: 'Failed to fetch products' })
   }
 })
 
-// ============================================
-// ===== NEWSLETTER ENDPOINT (DATABASE) =====
-// ============================================
-
+// ===== NEWSLETTER ENDPOINT =====
 app.post('/api/newsletter/subscribe', async (req: Request, res: Response) => {
   try {
     const { email } = req.body
@@ -381,34 +362,28 @@ app.post('/api/newsletter/subscribe', async (req: Request, res: Response) => {
       create: { email, active: true }
     })
     
-    res.json({
+    return res.json({
       success: true,
       message: 'Successfully subscribed to newsletter',
       data: { email: subscriber.email }
     })
   } catch (error) {
     console.error('Newsletter subscription error:', error)
-    res.status(500).json({ error: 'Failed to subscribe' })
+    return res.status(500).json({ error: 'Failed to subscribe' })
   }
 })
 
-// ============================================
 // ===== ERROR HANDLING =====
-// ============================================
-
 app.use((req: Request, res: Response) => {
-  res.status(404).json({ error: 'Route not found' })
+  return res.status(404).json({ error: 'Route not found' })
 })
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack)
-  res.status(500).json({ error: 'Something went wrong!' })
+  return res.status(500).json({ error: 'Something went wrong!' })
 })
 
-// ============================================
 // ===== START SERVER =====
-// ============================================
-
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`)
