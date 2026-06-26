@@ -51,7 +51,7 @@
 .swiper-pagination-bullet {
   width: 8px !important;
   height: 8px !important;
-  background: rgba(255, 255, 255, 0.5) !important;
+  background: #EAEAEA !important;
   opacity: 1 !important;
   transition: all 0.3s ease !important;
 }

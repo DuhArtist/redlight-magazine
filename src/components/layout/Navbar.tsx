@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
 
   const navItems = [
     { 
-      label: 'Read', 
+      label: 'Reads', 
       path: '/reads',
       icon: null
     },
@@ -70,8 +70,8 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav className={`fixed bottom-8 left-8 z-50 transition-all duration-300 ${
-        scrolled ? 'opacity-45' : 'opacity-100'
+      <nav className={`fixed top-8 right-8 z-50 transition-all duration-300 ease-in-out ${
+        scrolled ? 'opacity-45 hover:opacity-100' : 'opacity-100'
       }`}>
         <div className="relative">
           {/* Main Navbar Container */}

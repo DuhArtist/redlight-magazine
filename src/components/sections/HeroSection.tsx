@@ -20,7 +20,7 @@ const HeroSection: React.FC = () => {
     {
       image: 'https://res.cloudinary.com/xamspc0g/image/upload/v1782408905/pussypop_kptqzb.png',
       alt: 'Holly Hendrix Experience',
-      title: 'Holly Hendrix Experience',
+      title: 'Holly Hendrix Story',
       caption: 'Holly recaps a traumatic experience from the industry'
     },
     {
@@ -45,14 +45,14 @@ const HeroSection: React.FC = () => {
             className="space-y-4"
           >
             <img 
-            src="https://res.cloudinary.com/xamspc0g/image/upload/v1782415164/Official_Logo_fcvuby.png" 
+            src="https://res.cloudinary.com/xamspc0g/image/upload/v1782416057/RedLight_Logo_w_Tag_Black_mmaj7d.png" 
             alt="RedLight Beyond Skin logo"
-            className="h-86 mx-auto mb-4 opacity-90"
+            className="h-26 mx-auto mb-8 opacity-90"
           />
             <div className="text-gray-800 space-y-4">
               <div className="pt-4 border-t border-gray-200">
-                <p className="text-gray-700 text-l mb-2">
-                  Creative media and services for adult entertainers and providers <br/> — beyond skin.
+                <p className="text-gray-700 text-l mb-4">
+                  Creative media and services for adult entertainers and providers <br/> — made by DuhArtist.
                 </p>
               </div>
             </div>
@@ -67,6 +67,9 @@ const HeroSection: React.FC = () => {
         >
         </motion.div>
       </div>
+
+      {/* Pagination Bullets */}
+        <div className="swiper-pagination !bottom-6 !left-6 !right-auto !top-auto !w-auto !space-x-2" />
 
       {/* Right Column: Full-screen Slider */}
       <div className="lg:absolute lg:right-0 lg:top-0 lg:w-3/4 h-screen">
@@ -105,8 +108,6 @@ const HeroSection: React.FC = () => {
             </SwiperSlide>
           ))}
           
-          {/* Pagination in Top Right Corner */}
-        <div className="swiper-pagination !top-6 !right-6 !left-auto !bottom-auto !w-auto !space-x-2" />
         </Swiper>
 
         {/* Overlay Text with Slide-in Animation */}
