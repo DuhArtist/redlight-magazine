@@ -7,3 +7,7 @@ dist/
 .idea/
 
 uploads/
+.env
+.env.local
+.env.production
+.env.*.local
